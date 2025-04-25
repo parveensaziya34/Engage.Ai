@@ -1,0 +1,774 @@
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Access Control</title>
+  {% load static %}
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      display: flex;
+      background: url("{% static 'image.jpg' %}") no-repeat center center fixed;
+
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 25%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .label {
+      font-weight: 600;
+      align-self: flex-start;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .select-wrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .select-wrapper input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    .dropdown-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-left: -10px;
+      padding: 6px 10px;
+      border: 4px solid black;
+      cursor: pointer;
+      background-color: #666;
+      color: white;
+      border-radius: 5px;
+      height: 50%;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-list {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid black;
+      border-radius: 10px;
+      z-index: 99;
+      display: none;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    .dropdown-item img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 20px 0 10px;
+    }
+
+    .user-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .user-name {
+      font-weight: bold;
+    }
+
+    .user-email {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .delete-btn {
+      padding: 12px 30px;
+      background-color: #666;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    .delete-btn:hover{
+    background-color: #045b83;
+    }
+
+
+    .main {
+      width: 75%;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 40px;
+      margin: 0;
+    }
+
+    .header p {
+      font-size: 20px;
+      color: #555;
+    }
+
+    .access-section {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 5px;
+      position: relative;
+      gap: 10px;
+      margin-left: 180px;
+    }
+
+    .access-section::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+
+      background-color: #aaa;
+      left: 40%;
+      top: 0;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      width: 45%;
+      padding: 0 20px;
+    }
+
+    .column h3 {
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .column label {
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+      accent-color: teal;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      gap: 30px;
+    }
+
+    .update-btn,
+    .reset-btn,
+    .back-btn {
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .update-btn {
+      background-color: #6b6f71;
+      color: white;
+    }
+
+    .reset-btn,
+    .back-btn {
+      background-color: #666;
+      color: white;
+    }
+    
+    .update-btn:hover,
+    .reset-btn:hover,
+    .back-btn:hover {
+      background-color: #045b83;
+    }
+    /* .update-btn:active,
+    .reset-btn:active,
+    .back-btn:active {
+      background-color: #004d6d;
+      transform: scale(0.95);
+    } */
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <label for="user-select" class="label">Select User(s)</label>
+      <div class="select-wrapper">
+        <input type="text" id="user-name" value="Aliya Khan" readonly />
+        <span class="dropdown-icon" onclick="toggleDropdown()">▼</span>
+        <div id="dropdown" class="dropdown-list"></div>
+      </div>
+
+      <img src="{% static 'avtar1.jpg'  %}" alt="User Avatar" class="avatar" id="avatar" />
+      <div class="user-info">
+        <p class="user-name" id="display-name">Aliya Khan</p>
+        <p class="user-email" id="display-email">AliyaKM@client.com</p>
+      </div>
+
+      <button class="delete-btn">Delete User</button>
+    </div>
+
+    <div class="main">
+      <div class="header">
+        <h1>Access Control</h1>
+        <p>Secure Your Space: Effortless Access Control at Your Fingertips</p>
+      </div>
+
+      <div class="access-section">
+        <div class="column">
+          <h3>PRODUCT</h3>
+          <label><input type="checkbox" checked> Credit Cards</label>
+          <label><input type="checkbox"> Insurance</label>
+          <label><input type="checkbox"> Deposits</label>
+          <label><input type="checkbox"> eWallets</label>
+          <label><input type="checkbox"> Equity</label>
+          <label><input type="checkbox"> Remittance</label>
+        </div>
+
+        <div class="column">
+          <h3>ROLE & RESPONSIBILITY</h3>
+          <label><input type="checkbox" checked> Campaign Maker</label>
+          <label><input type="checkbox"> Campaign Checker</label>
+          <label><input type="checkbox"> Data Analytics</label>
+          <label><input type="checkbox" checked> Content Creator</label>
+          <label><input type="checkbox"> Tech Admin</label>
+          <label><input type="checkbox"> Reports</label>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="update-btn" onclick="alert('Access updated successfully!')">Update</button>
+        <button class="reset-btn" onclick="resetCheckboxes()">Reset</button>
+        <button class="back-btn" onclick="goBack()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function resetCheckboxes() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked = false);
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+     
+    const users = [
+      {
+        name: "Aliya Khan",
+        email: "PoojaM@client.com",
+        avatar: "{% static 'avtar1.jpg' %}"
+
+      },
+      {
+        name: "Rahul Verma",
+        email: "rahul.v@client.com",
+        avatar: "{% static 'avtar2.jpg' %}"
+      },
+      {
+        name: "Anjali Gupta",
+        email: "anjali.g@client.com",                      
+
+        avatar: "{% static 'avtar2.jpg' %}"
+
+      }
+    ];
+
+    const dropdown = document.getElementById("dropdown");
+
+    users.forEach(user => {
+      const item = document.createElement("div");
+      item.className = "dropdown-item";
+      item.innerHTML = `
+        <img src="${user.avatar}" alt="${user.name}" />
+        <div>
+          <div>${user.name}</div>
+          <div style="font-size: 12px; color: gray;">${user.email}</div>
+        </div>
+      `;
+      item.onclick = () => selectUser(user);
+      dropdown.appendChild(item);
+    });
+
+    function toggleDropdown() {
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function selectUser(user) {
+      document.getElementById("user-name").value = user.name;
+      document.getElementById("display-name").textContent = user.name;
+      document.getElementById("display-email").textContent = user.email;
+      document.getElementById("avatar").src = user.avatar;
+      toggleDropdown();
+    }
+
+    window.addEventListener("click", (e) => {
+      if (!e.target.closest(".select-wrapper")) {
+        dropdown.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Access Control</title>
+    {% load static %}
+
+    <style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    /* background: url("{% static 'image.jpg' %}") no-repeat center center fixed; */
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    background: url("{% static 'image.jpg' %}") no-repeat center center fixed;
+
+    /* background-color: rgba(255, 255, 255, 0.6); */
+}
+
+.sidebar {
+    width: 300px;
+    background-color: white;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 95px;
+    /* box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.label {
+    font-weight: bold;
+    align-self: flex-start;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.select-wrapper input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 0px;
+  padding: 6px 10px;
+  border: 4px solid black;
+  cursor: pointer;
+  background-color: #666;
+  color: white;
+  border-radius: 5px;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  }
+/* .dropdown-icon {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+} */
+
+.dropdown-list {
+    position: absolute;
+    top: 42px;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: none;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 10px 0 15px;
+    /* border: 3px solid #ccc; */
+    display: block;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.user-email {
+    font-size: 14px;
+    color: #777;
+}
+
+.delete-btn {
+    padding: 12px 65px;
+    font-size: 16px;
+    background-color: #636161;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #036d8d;
+}
+
+.main {
+    flex-grow: 1;
+    /* padding: 40px 50px; */
+    background-color: rgba(255, 255, 255, 0.95);
+    overflow-y: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 46px;
+    color: #333;
+    margin: 0;
+}
+
+.header p {
+    font-size: 28px;
+    color: #666;
+}
+
+.access-section {
+    display: flex;
+    justify-content: space-between;
+    /* gap: 60px; */
+    margin-top: 20px;
+}
+.access-section::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 370px;
+    background-color: #aaa;
+    left: 61%;
+    top: 0;
+    margin-top: 250px;
+}
+
+.column {
+    flex: 1;
+    padding: 0 140px;
+}
+
+.column h3 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px ;
+    padding-bottom: 5px;
+}
+
+.label-checkbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+.label-checkbox input[type="checkbox"] {
+    transform: scale(1.8);
+    accent-color: teal;
+}
+
+.action-buttons {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 300px;
+    
+}
+
+.update-btn,
+.reset-btn,
+.bck-btn {
+    padding: 12px 35px;
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #444747;
+
+
+}
+
+/* .update-btn, .reset-btn, .back-btn {
+    background-color: #444747;
+  }; */
+
+
+/* .reset-btn {
+  background-color: #444747;
+}; */
+
+
+/* .back-btn {
+  background-color: #444747;
+} */
+
+.update-btn:hover,.reset-btn:hover, .bck-btn:hover {
+    background-color: #036d8d;
+  }
+
+
+/* .reset-btn:hover {
+    background-color: #036d8d;
+  };
+
+.back-btn:hover {
+    background-color: #036d8d;
+  }; */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <label for="user-select" class="label">Select User(s)</label>
+            <div class="select-wrapper">
+                <input type="text" id="user-name" value="Aliya Khan" readonly />
+                <span class="dropdown-icon" onclick="toggleDropdown()">▼</span>
+                <div id="dropdown" class="dropdown-list"></div>
+            </div>
+
+            <img src="{% static 'avtar1.jpg' %}" alt="User Avatar" class="avatar" id="avatar" />
+            <div class="user-info">
+                <p class="user-name" id="display-name">Aliya Khan</p>
+                <p class="user-email" id="display-email">AliyaKM@client.com</p>
+            </div>
+
+            <button class="delete-btn">Delete User</button>
+        </div>
+
+        <div class="main">
+            <div class="header">
+                <h1>Access Control</h1>
+                <p>Secure Your Space: Effortless Access Control at Your Fingertips</p>
+            </div>
+
+            <div class="access-section">
+                <div class="column">
+                    <h3>PRODUCT</h3>
+                    <div class="label-checkbox">Credit Cards <input type="checkbox" checked></div>
+                    <div class="label-checkbox">Insurance <input type="checkbox"></div>
+                    <div class="label-checkbox">Deposits <input type="checkbox"></div>
+                    <div class="label-checkbox">eWallets <input type="checkbox"></div>
+                    <div class="label-checkbox">Equity <input type="checkbox"></div>
+                    <div class="label-checkbox">Remittance <input type="checkbox"></div>
+                </div>
+
+                <div class="column">
+                    <h3>ROLE & RESPONSIBILITY</h3>
+                    <div class="label-checkbox">Campaign Maker <input type="checkbox" checked></div>
+                    <div class="label-checkbox">Campaign Checker <input type="checkbox"></div>
+                    <div class="label-checkbox">Data Analytics <input type="checkbox"></div>
+                    <div class="label-checkbox">Content Creator <input type="checkbox" checked></div>
+                    <div class="label-checkbox">Tech Admin <input type="checkbox"></div>
+                    <div class="label-checkbox">Reports <input type="checkbox"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="update-btn" onclick="alert('Access updated successfully!')">Update</button>
+                <button class="reset-btn" onclick="resetCheckboxes()">Reset</button>
+                <button class="bck-btn" onclick="goBack()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function resetCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        const users = [
+            {
+                name: "Aliya Khan",
+                email: "PoojaM@client.com",
+                avatar: "{% static 'avtar1.jpg' %}"
+            },
+            {
+                name: "Rahul Verma",
+                email: "rahul.v@client.com",
+                avatar: "{% static 'avtar2.jpg' %}"
+            },
+            {
+                name: "Anjali Gupta",
+                email: "anjali.g@client.com",
+                avatar: "{% static 'avtar2.jpg' %}"
+            }
+        ];
+
+        const dropdown = document.getElementById("dropdown");
+
+        users.forEach(user => {
+            const item = document.createElement("div");
+            item.className = "dropdown-item";
+            item.innerHTML = `
+                <img src="${user.avatar}" alt="${user.name}" />
+                <div>
+                    <div>${user.name}</div>
+                    <div style="font-size: 12px; color: gray;">${user.email}</div>
+                </div>
+            `;
+            item.onclick = () => selectUser(user);
+            dropdown.appendChild(item);
+        });
+
+        function toggleDropdown() {
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        function selectUser(user) {
+            document.getElementById("user-name").value = user.name;
+            document.getElementById("display-name").textContent = user.name;
+            document.getElementById("display-email").textContent = user.email;
+            document.getElementById("avatar").src = user.avatar;
+            toggleDropdown();
+        }
+
+        window.addEventListener("click", (e) => {
+            if (!e.target.closest(".select-wrapper")) {
+                dropdown.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

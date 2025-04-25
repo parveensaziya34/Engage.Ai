@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Engage.AI Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  {% load static %}
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: rgba(255, 255, 255, 0.95);       
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    .container {
+      display: flex;
+      background: url("{% static 'image.jpg' %}") no-repeat center center fixed;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      max-width: 900px;
+      width: 100%;
+      overflow: hidden;
+      backdrop-filter: blur(3px);
+    }
+
+    .left-section {
+      padding: 40px;
+      width: 400px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .left-section h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .h1-text {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .left-section p {
+      color: #667885;
+      margin-bottom: 30px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #4299e1;
+      box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+    }
+
+    .remember-me input {
+      margin-right: 8px;
+    }
+
+    .remember-me label {
+      color: #667885;
+      font-size: 14px;
+    }
+
+    .forgot-password {
+      color: #4299e1;
+      font-size: 14px;
+      margin-left: 98px;
+      font-display: inline;
+      text-decoration: none;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .sign-in-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4a5568;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .sign-in-button:hover {
+      background-color: #3182ce;
+    }
+
+    .sign-up-link {
+      color: #667885;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .sign-up-link a {
+      color: red;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .sign-up-link a:hover {
+      text-decoration: underline;
+    }
+
+    .right-section {
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .right-section::before {
+      content: "";
+      position: absolute;
+      top: 15%;
+      bottom: 15%;
+      left: 8%;
+      width: 1px;
+      background-color: lightgreen;
+    }
+
+    .right-section img {
+      width: 250px;
+      margin-bottom: 20px;
+      border: 5px solid #4299e1;
+      border-radius: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      box-sizing: border-box;
+      margin-left: 10px;
+    }
+
+    .right-section h2 {
+      color: #2c3e50;
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .right-section p {
+      color: #667885;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .right-section span {
+      color: red;
+    }
+
+    .bottom-text {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      color: gray;
+      text-align: center;
+      transform: translateX(-50%);
+      padding-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 95%;
+      }
+
+      .left-section,
+      .right-section {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .right-section img {
+        width: 200px;
+      }
+
+      .border-left {
+        border-left: none;
+        border-top: 1px solid #e0e0e0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-section">
+      <h1 class="h1-text">WELCOME</h1>
+
+      <p><em>Your journey to smarter engagement starts</em></p>
+
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password">
+      </div>
+
+      <div class="form-options">
+        <div class="remember-me">
+          <input type="checkbox" id="remember">
+          <label for="remember">Remember me</label>
+        </div>
+        <a href="#" class="forgot-password">Forgot password</a>
+      </div>
+
+      <button class="sign-in-button">Sign in</button>
+
+      <div class="sign-up-link">
+        Don't have an account? <a href="#">Sign up free!</a>
+      </div>
+    </div>
+
+    <div class="right-section border-left">
+      <img src="{% static 'ai.png' %}" alt="Engage.AI Robot">
+      <h2>ENGAGE.AI</h2>
+      <p>Smarter <span>Conversations</span> for Better <span>Leads</span></p>
+    </div>
+
+    <div class="bottom-text">
+      <p><em>www.aSquare.com</em></p>
+    </div>
+  </div>
+</body>
+</html>
