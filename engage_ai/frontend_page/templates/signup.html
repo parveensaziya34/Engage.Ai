@@ -1,0 +1,358 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Engage.AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-section, .image-section {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .form-section {
+      background-color: #f7f7f7;
+    }
+
+    .form-section h2 {
+      font-size: 28px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .form-section p {
+      margin-bottom: 20px;
+      color: #7f8c8d;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #424c5a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .signin-text {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .signin-link {
+      color: red;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .image-section {
+      text-align: center;
+      background-color: #fff;
+      border-left: 1px solid #e0e0e0;
+    }
+
+    .image-section img {
+      width: 220px;
+      height: auto;
+      border: 5px solid #e0e0ff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #cce;
+      margin-bottom: 20px;
+    }
+
+    .image-section h3 {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .image-section p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .highlight {
+      color: red;
+      font-weight: 600;
+    }
+
+    .website {
+      font-size: 12px;
+      margin-top: 10px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h2>WELCOME</h2>
+      <p><i>Your journey to smarter engagement starts</i></p>
+
+      <form>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm password" required>
+
+        <button type="submit">Sign up</button>
+      </form>
+
+      <div class="signin-text">
+        Already have an account? <a href="#" class="signin-link">Sign in here</a>
+      </div>
+    </div>
+
+    <div class="image-section">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Bot">
+      <h3>ENGAGE.AI</h3>
+      <p>Smarter <span class="highlight">Conversations</span> for Better <span class="highlight">Leads</span></p>
+      <p class="website">www.aSquare.com</p>
+    </div>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Engage.AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #fff;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .form-section {
+      flex: 1.5;
+      padding: 60px;
+      background-color: #f7f7f7;
+    }
+
+    .image-section {
+      flex: 1.3;
+      padding: 40px;
+      background-color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #e0e0e0;
+    }
+
+    .form-section h2 {
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .form-section p {
+      margin-bottom: 20px;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+ 
+
+    .welcome-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.welcome-box h2 {
+  font-size: 32px;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.welcome-box p {
+  font-size: 16px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #424c5a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+  background-color: #055ab0; /* Darker shade on hover */
+  transition: background-color 0.3s ease;
+}
+
+    .signin-text {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .signin-link {
+      color: red;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .image-section img {
+  width: 320px;
+  height: auto;
+  padding: 20px;
+  background-color: white; /* image background */
+  border: 6px solid #87ceeb; /* sky blue border */
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(135, 206, 235, 0.5); /* soft glow */
+  margin-bottom: 30px;
+}
+
+
+    .image-section h3 {
+      font-size: 30px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .image-section p {
+      font-size: 18px;
+      color: #666;
+    }
+
+    .highlight {
+      color: red;
+      font-weight: 600;
+    }
+
+    .website {
+      font-size: 14px;
+      margin-top: 15px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+        <div class="welcome-box">
+            <h2>WELCOME</h2>
+            <p>Your journey to smarter engagement starts</p>
+          </div>
+          
+      <form>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm password" required>
+
+        <button type="submit">Sign up</button>
+      </form>
+
+      <div class="signin-text">
+        Already have an account? <a href="#" class="signin-link">Sign in here</a>
+      </div>
+    </div>
+
+    <div class="image-section">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Bot">
+      <h3>ENGAGE.AI</h3>
+      <p>Smarter <span class="highlight">Conversations</span> for Better <span class="highlight">Leads</span></p>
+      <p class="website">www.aSquare.com</p>
+    </div>
+  </div>
+</body>
+</html>
