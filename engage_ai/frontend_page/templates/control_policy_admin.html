@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Policy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      width: 100%;
+      max-width: 1400px;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      height: 60px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(24px, 4vw, 36px);
+      color: #222;
+    }
+
+    .subtext {
+      text-align: center;
+      margin: 10px 0 30px;
+      font-size: clamp(14px, 2vw, 18px);
+      color: #444;
+      font-weight: 500;
+    }
+
+    .main-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .left-section {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .message-block {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    .message-block img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .message-block input,
+    .message-block select {
+      padding: 8px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font-size: clamp(14px, 1.5vw, 16px);
+      width: 80px;
+    }
+
+    .message-block span {
+      font-weight: 500;
+    }
+
+    .offset {
+      margin-left: 58px;
+    }
+
+    .right-section {
+      flex: 1;
+      background-color: #e9f1f1;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+      font-size: clamp(14px, 1.5vw, 16px);
+    }
+
+    .right-section h3 {
+      font-size: clamp(16px, 2vw, 20px);
+      margin-bottom: 10px;
+      color: #1c1c1c;
+    }
+
+    .right-section input[type="time"] {
+      padding: 6px 10px;
+      border-radius: 5px;
+      border: 1px solid #999;
+      margin-top: 5px;
+      font-size: 1em;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 20px;
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .btn.update {
+      background-color: #04827e;
+      color: white;
+    }
+
+    .btn.reset,
+    .btn.back {
+      background-color: #5c5555;
+      color: white;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .main-grid {
+        flex-direction: column;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .right-section {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="utm.png" alt="UTM Logo" class="logo" />
+      <h1>Contact Policy</h1>
+      <img src="asquare.png" alt="A Square Logo" class="logo" />
+    </header>
+
+    <p class="subtext">Smart Connections: Respecting Preferences, Building Trust</p>
+
+    <div class="main-grid">
+      <!-- LEFT SECTION -->
+      <div class="left-section">
+        <div class="message-block">
+          <img src="email.png" alt="Email Icon" />
+          <span>Maximum</span>
+          <input type="number" value="1" />
+          <span>Marketing eMails</span>
+          <select>
+            <option>per day</option>
+            <option>per week</option>
+          </select>
+        </div>
+        <div class="message-block offset">
+          <span>Maximum</span>
+          <input type="number" value="4" />
+          <span>Marketing eMail</span>
+          <select>
+            <option>per week</option>
+            <option>per day</option>
+          </select>
+        </div>
+
+        <div class="message-block">
+          <img src="notification.png" alt="PN Icon" />
+          <span>Maximum</span>
+          <input type="number" value="2" />
+          <span>Marketing PN</span>
+          <select>
+            <option>per day</option>
+            <option>per week</option>
+          </select>
+        </div>
+        <div class="message-block offset">
+          <span>Maximum</span>
+          <input type="number" value="6" />
+          <span>Marketing PN</span>
+          <select>
+            <option>per week</option>
+            <option>per day</option>
+          </select>
+        </div>
+
+        <div class="message-block">
+          <img src="whatsapp.png" alt="WA Icon" />
+          <span>Maximum</span>
+          <input type="number" value="2" />
+          <span>Marketing WA</span>
+          <select>
+            <option>per day</option>
+            <option>per week</option>
+          </select>
+        </div>
+        <div class="message-block offset">
+          <span>Maximum</span>
+          <input type="number" value="6" />
+          <span>Marketing WA</span>
+          <select>
+            <option>per week</option>
+            <option>per day</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION -->
+      <div class="right-section">
+        <h3>Outgoing Message<br>Time control</h3>
+        <p>Marketing messages are allowed to be sent to customers between:</p>
+        <label>Start:</label>
+        <input type="time" value="09:00" />
+        <label>End:</label>
+        <input type="time" value="20:00" />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn update">Update</button>
+      <button class="btn reset">Reset</button>
+      <button class="btn back">Back</button>
+    </div>
+  </div>
+</body>
+</html>

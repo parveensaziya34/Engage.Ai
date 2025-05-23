@@ -35,3 +35,8 @@ def chatbot_page(request):
         return render(request,'chatbot.html',{})
 
 
+def control_page(request):
+        return render(request,'control_policy_admin.html',{})
+
+
+
