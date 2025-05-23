@@ -38,5 +38,6 @@ def chatbot_page(request):
 def control_page(request):
         return render(request,'control_policy_admin.html',{})
 
-
+def calender_page(request):
+     return render(request,'calender.html',{})
 

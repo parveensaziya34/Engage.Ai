@@ -1,5 +1,5 @@
 from django.urls import path
-from frontend_page.views import login_page,access_page,signup_page,chatbot_page,control_page,dashboard_page
+from frontend_page.views import login_page,access_page,signup_page,chatbot_page,control_page,dashboard_page,calender_page
 urlpatterns = [
     path('', login_page,name = "signin_page"),
     path('access/',access_page),
@@ -7,6 +7,8 @@ urlpatterns = [
     path('chatbot/',chatbot_page),
     path('control/',control_page),
     path('dashboard/',dashboard_page),
+    path('calender/',calender_page),
+
 
 
 
