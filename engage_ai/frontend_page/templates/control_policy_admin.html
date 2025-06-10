@@ -1,274 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Policy</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contact Policy</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #046bb0; /* A vibrant blue for accents */
+            --secondary-color: #2ecc71; /* A green for success/update */
+            --dark-text: #2c3e50;
+            --medium-text: #778181;
+            --light-bg: #f9fbfd;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --sidebar-bg: #34495e; /* Darker blue-grey for sidebar */
+            --sidebar-item-hover: #4e637a; /* Slightly lighter on hover */
+            --navbar-bg: #ffffff;
+            --logout-red: #e74c3c;
+            --home-blue: #e74c3c; /* A moderate blue for the home button */
+        }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: 'Segoe UI', sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow: hidden; /* Prevent overall scrollbar unless content demands it */
+        }
 
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      width: 100%;
-      max-width: 1400px;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-    }
+        body {
+            background: linear-gradient(to right, #f0f2f5, #e0e6ec); /* Subtle gradient background */
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column; /* Main layout is column now: navbar, then content */
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+        /* --- Navbar Styles --- */
+        .navbar {
+            background-color: var(--navbar-bg);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Ensure navbar is always on top */
+            height: 80px; /* Fixed height for navbar */
+        }
 
-    .logo {
-      height: 60px;
-    }
+        .navbar-left h2 {
+            font-size: clamp(20px, 2.5vw, 28px);
+            color: var(--dark-text);
+            font-weight: 600;
+        }
 
-    h1 {
-      text-align: center;
-      font-size: clamp(24px, 4vw, 36px);
-      color: #222;
-    }
+        .navbar-left p {
+            font-size: clamp(12px, 1.5vw, 16px);
+            color: var(--medium-text);
+        }
 
-    .subtext {
-      text-align: center;
-      margin: 10px 0 30px;
-      font-size: clamp(14px, 2vw, 18px);
-      color: #444;
-      font-weight: 500;
-    }
+        .navbar-right img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
 
-    .main-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 30px;
-    }
+        .navbar-right img:hover {
+            transform: scale(1.05);
+        }
 
-    .left-section {
-      flex: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        /* --- Main Layout: Sidebar and Content --- */
+        .dashboard-layout {
+            display: flex;
+            flex: 1; /* Take remaining vertical space */
+            width: 100%;
+            overflow: hidden; /* Hide scrollbars on this container */
+        }
 
-    .message-block {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: clamp(14px, 2vw, 18px);
-    }
+        /* --- Sidebar Styles --- */
+        .sidebar {
+            width: 320px; /* Increased sidebar width */
+            background-color: var(--sidebar-bg);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
+            overflow-y: auto; /* Allow sidebar to scroll if items overflow */
+        }
 
-    .message-block img {
-      width: 45px;
-      height: 45px;
-    }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1; /* Allow the ul to take available space */
+        }
 
-    .message-block input,
-    .message-block select {
-      padding: 8px;
-      border: 1px solid #aaa;
-      border-radius: 6px;
-      font-size: clamp(14px, 1.5vw, 16px);
-      width: 80px;
-    }
+        .sidebar ul li {
+            margin-bottom: 10px; /* Increased margin for separation between boxes */
+            padding: 0 20px; /* Add horizontal padding to center the box */
+        }
 
-    .message-block span {
-      font-weight: 500;
-    }
+        .sidebar ul li a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 400;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
+            border-radius: 8px; /* Rounded corners for the boxes */
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for the box */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            text-align: center; /* Center the text inside the box */
+        }
 
-    .offset {
-      margin-left: 58px;
-    }
+        .sidebar ul li a:hover {
+            background-color: var(--sidebar-item-hover);
+            transform: translateY(-3px); /* Lift effect on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
 
-    .right-section {
-      flex: 1;
-      background-color: #e9f1f1;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-      font-size: clamp(14px, 1.5vw, 16px);
-    }
+        .sidebar ul li a.active {
+            background-color: var(--primary-color);
+            border-color: var(--secondary-color); /* Highlight active item */
+            font-weight: 600;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
 
-    .right-section h3 {
-      font-size: clamp(16px, 2vw, 20px);
-      margin-bottom: 10px;
-      color: #1c1c1c;
-    }
 
-    .right-section input[type="time"] {
-      padding: 6px 10px;
-      border-radius: 5px;
-      border: 1px solid #999;
-      margin-top: 5px;
-      font-size: 1em;
-    }
+        /* Container for Home and Logout buttons */
+        .sidebar-buttons {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            gap: 10px; /* Space between buttons */
+            padding: 20px 25px; /* Padding similar to list items */
+            margin-top: auto; /* Push buttons to the bottom */
+        }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
+        /* --- Logout Button in Sidebar --- */
+        .sidebar .logout-btn {
+            background-color: var(--logout-red);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center; /* Center the text within the button */
+            flex-grow: 1; /* Allow button to grow */
+            max-width: 120px; /* Max width for button */
+        }
 
-    .btn {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 20px;
-      font-size: clamp(14px, 2vw, 18px);
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
-    }
+        .sidebar .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
 
-    .btn.update {
-      background-color: #04827e;
-      color: white;
-    }
+        /* --- Home Button in Sidebar --- */
+        .sidebar .home-btn {
+            background-color: var(--home-blue);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            flex-grow: 1; /* Allow button to grow */
+            max-width: 120px; /* Max width for button */
+        }
 
-    .btn.reset,
-    .btn.back {
-      background-color: #5c5555;
-      color: white;
-    }
+        .sidebar .home-btn:hover {
+            background-color: #9a2b09;
+            transform: translateY(-3px);
+        }
 
-    .btn:hover {
-      opacity: 0.9;
-    }
+        /* --- Main Content Area Styles --- */
+        .main-content {
+            flex: 1; /* Take remaining horizontal space */
+            padding: 15px; /* Reduced padding from 20px to 15px */
+            overflow-y: auto; /* Allow content to scroll */
+            position: relative; /* For logout button positioning */
+        }
 
-    @media (max-width: 768px) {
-      .main-grid {
-        flex-direction: column;
-      }
+        /* Adjusted container to fit within main-content */
+        .container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 1700px;
+            border-radius: 15px;
+            padding: 30px 50px;
+            box-shadow: 0 10px 30px var(--shadow);
+            animation: fadeIn 0.8s ease-out;
+            margin: 0 auto; /* Changed from margin: auto; to margin: 0 auto; to remove top/bottom margin and keep horizontal centering */
+            min-height: calc(100vh - 80px - 30px); /* Adjusted min-height: (40px padding reduced to 30px to compensate for reduced main-content padding) */
+            display: flex;
+            flex-direction: column;
+        }
 
-      .buttons {
-        flex-direction: column;
-        gap: 15px;
-      }
+        /* Ensure contact policy container content is centered horizontally when appropriate */
+        .container > header,
+        .container > .subtext,
+        .container > .buttons {
+            align-self: center;
+        }
 
-      .right-section {
-        margin-top: 20px;
-      }
-    }
-  </style>
+        .container > .main-grid {
+            flex-grow: 1; /* Allow the grid to take available space */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            display: flex;
+            justify-content: center; /* Changed to center content after removing logos */
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 42px);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .subtext {
+            text-align: center;
+            margin: 10px 0 40px;
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: var(--medium-text);
+            font-weight: 400;
+        }
+
+        .main-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center items when they wrap */
+            gap: 50px;
+        }
+
+        .left-section {
+            flex: 2;
+            min-width: 300px; 
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .message-block {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: clamp(15px, 2vw, 19px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .message-block:hover {
+            transform: translateY(-5px);
+        }
+
+        .message-block img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-right: 5px;
+        }
+
+        .message-block span {
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        .message-block input[type="number"],
+        .message-block select {
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: clamp(15px, 1.6vw, 17px);
+            width: 90px;
+            text-align: center;
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+            appearance: none; /* Remove default arrow on select */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+
+        .message-block select {
+            padding-right: 80px; /* Make room for custom arrow if desired */
+            width: 170px; /* Increased width for per day/per week dropdown */
+            margin-right: 100px;
+            column-gap: 10px;
+        }
+
+
+        .offset {
+            margin-left: 60px; /* Adjust based on icon size and gap */
+        }
+
+        .right-section {
+            flex: 1;
+            min-width: 280px;
+            background: linear-gradient(to bottom right, #eaf4f7, #d7e9f0); /* Soft gradient for right section */
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+            font-size: clamp(15px, 1.8vw, 18px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right-section h3 {
+            font-size: clamp(20px, 2.5vw, 26px);
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .right-section p {
+            margin-bottom: 20px;
+            color: var(--medium-text);
+        }
+
+        .right-section label {
+            font-weight: 500;
+            margin-right: 10px;
+            color: var(--dark-text);
+        }
+
+        .right-section input[type="time"] {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+            font-size: clamp(16px, 1.8vw, 19px);
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: clamp(16px, 2vw, 20px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+
+        .btn.update {
+            background-color: #5f6767;
+            color: white;
+        }
+
+        .btn.update:hover {
+            background-color: #086191;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn.reset,
+        .btn.back {
+            background-color: #5f6767; /* Softer grey */
+            color: white;
+        }
+
+        .btn.reset:hover,
+        .btn.back:hover {
+            background-color: #086191;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px; /* Adjusted width for tablets */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+                gap: 10px;
+            }
+            .dashboard-layout {
+                flex-direction: column; /* Stack sidebar and content on small screens */
+            }
+            .sidebar {
+                width: 100%; /* Full width sidebar on mobile */
+                height: auto; /* Height auto for sidebar */
+                padding: 15px 0;
+            }
+            .sidebar ul {
+                display: flex; /* Make sidebar items horizontal on mobile */
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+            .sidebar ul li {
+                margin-bottom: 5px; /* Smaller margin for horizontal layout */
+                padding: 0 5px; /* Adjust padding for smaller screens */
+            }
+            .sidebar ul li a {
+                padding: 10px 15px;
+                border-left: none; /* Remove left border highlight for horizontal layout */
+                border-bottom: 3px solid transparent; /* Use bottom border for active */
+                border-radius: 5px; /* Slightly smaller border-radius for mobile boxes */
+            }
+            .sidebar ul li a:hover {
+                padding-left: 15px; /* Reset padding-left on hover */
+                border-bottom-color: var(--sidebar-item-hover);
+            }
+            .sidebar ul li a.active {
+                border-left-color: transparent; /* Reset left border */
+                border-bottom-color: var(--secondary-color); /* Apply bottom border */
+            }
+            .main-content {
+                padding: 10px; /* Further reduced padding for smaller screens */
+            }
+            .container {
+                padding: 15px 20px; /* Reduced padding on all sides for smaller screens */
+                min-height: auto; /* Reset min-height for mobile */
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            h1 {
+                margin-top: 10px;
+            }
+
+            .main-grid {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .left-section {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .message-block {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .offset {
+                margin-left: 0; /* Remove offset on small screens */
+                padding-left: 10px; /* Indent slightly for clarity */
+            }
+
+            .message-block span {
+                width: 100%; /* Full width for text before inputs */
+            }
+
+            .message-block input,
+            .message-block select {
+                width: 100%; /* Full width for inputs */
+                max-width: 150px; /* But keep a reasonable max-width */
+            }
+
+            .right-section {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .right-section input[type="time"] {
+                width: 80%;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 30px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* For mobile, make sidebar buttons stack */
+            .sidebar-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .sidebar .home-btn,
+            .sidebar .logout-btn {
+                width: calc(100% - 50px); /* Account for left/right padding */
+                margin: 0; /* Reset margins added for desktop */
+                max-width: unset; /* Remove max-width on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px; /* Even smaller padding for very small screens */
+            }
+            .subtext {
+                font-size: clamp(14px, 3vw, 16px);
+            }
+            .message-block {
+                font-size: clamp(14px, 2.5vw, 16px);
+            }
+            .message-block input,
+            .message-block select {
+                font-size: clamp(14px, 2vw, 15px);
+            }
+            .sidebar ul li a {
+                padding: 8px 10px; /* Further reduce padding for very small screens */
+                font-size: 0.9em; /* Smaller font size for very small screens */
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="utm.png" alt="UTM Logo" class="logo" />
-      <h1>Contact Policy</h1>
-      <img src="asquare.png" alt="A Square Logo" class="logo" />
-    </header>
-
-    <p class="subtext">Smart Connections: Respecting Preferences, Building Trust</p>
-
-    <div class="main-grid">
-      <!-- LEFT SECTION -->
-      <div class="left-section">
-        <div class="message-block">
-          <img src="email.png" alt="Email Icon" />
-          <span>Maximum</span>
-          <input type="number" value="1" />
-          <span>Marketing eMails</span>
-          <select>
-            <option>per day</option>
-            <option>per week</option>
-          </select>
+    <div class="navbar">
+        <div class="navbar-left">
+            <h2>Welcome Back! Priyanka!</h2>
+            <p>Smart Connections: Respecting Preferences, Building Trust</p>
         </div>
-        <div class="message-block offset">
-          <span>Maximum</span>
-          <input type="number" value="4" />
-          <span>Marketing eMail</span>
-          <select>
-            <option>per week</option>
-            <option>per day</option>
-          </select>
+        <div class="navbar-right">
+            <img src="{% static 'avtar1.jpg' %}" alt="User Profile" />
         </div>
-
-        <div class="message-block">
-          <img src="notification.png" alt="PN Icon" />
-          <span>Maximum</span>
-          <input type="number" value="2" />
-          <span>Marketing PN</span>
-          <select>
-            <option>per day</option>
-            <option>per week</option>
-          </select>
-        </div>
-        <div class="message-block offset">
-          <span>Maximum</span>
-          <input type="number" value="6" />
-          <span>Marketing PN</span>
-          <select>
-            <option>per week</option>
-            <option>per day</option>
-          </select>
-        </div>
-
-        <div class="message-block">
-          <img src="whatsapp.png" alt="WA Icon" />
-          <span>Maximum</span>
-          <input type="number" value="2" />
-          <span>Marketing WA</span>
-          <select>
-            <option>per day</option>
-            <option>per week</option>
-          </select>
-        </div>
-        <div class="message-block offset">
-          <span>Maximum</span>
-          <input type="number" value="6" />
-          <span>Marketing WA</span>
-          <select>
-            <option>per week</option>
-            <option>per day</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- RIGHT SECTION -->
-      <div class="right-section">
-        <h3>Outgoing Message<br>Time control</h3>
-        <p>Marketing messages are allowed to be sent to customers between:</p>
-        <label>Start:</label>
-        <input type="time" value="09:00" />
-        <label>End:</label>
-        <input type="time" value="20:00" />
-      </div>
     </div>
 
-    <div class="buttons">
-      <button class="btn update">Update</button>
-      <button class="btn reset">Reset</button>
-      <button class="btn back">Back</button>
+    <div class="dashboard-layout">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#">Generate Leads</a></li>
+                <li><a href="#">Approve Campaigns</a></li>
+                <li><a href="#" class="active">Contact Policy (Admin)</a></li>
+                <li><a href="#">Access Matrix (Admin)</a></li>
+                <li><a href="#">Reports Hub</a></li>
+                <li><a href="#">Campaign Calendar</a></li>
+                <li><a href="#">Help Book</a></li>
+            </ul>
+            <div class="sidebar-buttons">
+                <a href="#" class="home-btn">Home</a>
+                <a href="#" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="container">
+                <header>
+                    <h1>Contact Policy</h1>
+                </header>
+
+                <p class="subtext">Smart Connections: Respecting Preferences, Building Trust</p>
+
+                <div class="main-grid">
+                    <div class="left-section">
+                        <div class="message-block ">
+                            <img src="{% static 'email-icon.png' %}" alt="Email Icon" />
+                            <span>Maximum</span>
+                            <input type="number" value="1" />
+                            <span>Marketing eMails</span>
+                            <select>
+                                <option>per day</option>
+                                <option>per week</option>
+                            </select>
+                        </div>
+                        <div class="message-block offset">
+                            <span>Maximum</span>
+                            <input type="number" value="4" />
+                            <span>Marketing eMails</span>
+                            <select>
+                                <option>per week</option>
+                                <option>per day</option>
+                            </select>
+                        </div>
+
+                        <div class="message-block ">
+                            <img src="{% static 'notification.jpeg' %}" alt="PN Icon" />
+                            <span>Maximum</span>
+                            <input type="number" value="2" />
+                            <span>Marketing PN</span>
+                            <select>
+                                <option>per day</option>
+                                <option>per week</option>
+                            </select>
+                        </div>
+                        <div class="message-block offset">
+                            <span>Maximum</span>
+                            <input type="number" value="6" />
+                            <span>Marketing PN</span>
+                            <select>
+                                <option>per week</option>
+                                <option>per day</option>
+                            </select>
+                        </div>
+
+                        <div class="message-block">
+                            <img src="{% static 'whatsapp-icon.png' %}" alt="WA Icon" />
+                            <span>Maximum</span>
+                            <input type="number" value="2" />
+                            <span>Marketing WA</span>
+                            <select>
+                                <option>per day</option>
+                                <option>per week</option>
+                            </select>
+                        </div>
+                        <div class="message-block offset">
+                            <span>Maximum</span>
+                            <input type="number" value="6" />
+                            <span>Marketing WA</span>
+                            <select>
+                                <option>per week</option>
+                                <option>per day</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="right-section">
+                        <h3>Outgoing Message<br>Time control</h3>
+                        <p>Marketing messages are allowed to be sent to customers between:</p>
+                        <div>
+                            <label>Start:</label>
+                            <input type="time" value="09:00" />
+                        </div>
+                        <div>
+                            <label>End:</label>
+                            <input type="time" value="20:00" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button class="btn update">Update</button>
+                    <button class="btn reset">Reset</button>
+                    <button class="btn back">Back</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </body>
 </html>

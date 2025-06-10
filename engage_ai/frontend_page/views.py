@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def login_page(request):
-    return render(request,'login_screen.html',{})
+    return render(request,'login_page.html',{})
 
 def signup_page(request):
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def signup_page(request):
             print('pass is not matched')
 
 
-    return render(request,'signup.html',{})
+    return render(request,'signup_page.html',{})
 
 
 def dashboard_page(request):
@@ -41,3 +41,8 @@ def control_page(request):
 def calender_page(request):
      return render(request,'calender.html',{})
 
+def email_page(request):
+     return render(request,'email_template.html',{})
+
+def chatbot_reciever_page(request):
+     return render(request,'chatbot_reciever.html', {})

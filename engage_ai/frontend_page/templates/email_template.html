@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #a0aec0;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-gray-100 font-sans text-gray-800">
+
+<div class="flex flex-col md:flex-row h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="md:w-64 w-full md:h-full bg-white shadow-lg border-r px-6 py-6 flex md:flex-col flex-row justify-between md:justify-start items-center md:items-start rounded-tr-3xl rounded-br-3xl md:space-y-8 space-x-4 md:space-x-0">
+    <h1 class="text-2xl md:text-3xl font-bold text-blue-600 tracking-tight">📧 EngageMail</h1>
+
+    <button onclick="document.getElementById('composeModal').classList.remove('hidden')" class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 px-4 rounded-xl font-semibold shadow hover:shadow-lg transition-all duration-300 hover:scale-105">
+      + Compose
+    </button>
+
+    <nav class="flex md:flex-col gap-3 mt-4 md:mt-0">
+      <a href="#" class="flex items-center gap-2 py-2 px-4 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition-all">
+        📥 <span class="hidden md:inline">Inbox</span>
+      </a>
+      <a href="#" class="flex items-center gap-2 py-2 px-4 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition-all">
+        📤 <span class="hidden md:inline">Sent</span>
+      </a>
+      <a href="#" class="flex items-center gap-2 py-2 px-4 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition-all">
+        📝 <span class="hidden md:inline">Drafts</span>
+      </a>
+      <a href="#" class="flex items-center gap-2 py-2 px-4 rounded-lg text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition-all">
+        🗑️ <span class="hidden md:inline">Trash</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex flex-col flex-1 overflow-hidden">
+
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between bg-white border-b px-6 md:px-8 py-4 md:py-5 shadow z-10">
+      <input type="text" placeholder="🔍 Search mail..." class="w-2/3 md:w-1/3 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"/>
+
+      <div class="flex items-center space-x-4">
+        <span class="text-sm font-medium text-gray-600 hidden md:block">parveen@example.com</span>
+        <img src="https://i.pravatar.cc/40" class="w-10 h-10 rounded-full shadow-md" alt="User Avatar"/>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="flex flex-1 overflow-hidden flex-col md:flex-row">
+
+      <!-- Email List -->
+      <section class="md:w-1/3 w-full bg-white border-r overflow-y-auto pt-4">
+        <ul class="divide-y divide-gray-100">
+          <li class="px-5 py-4 hover:bg-blue-50 cursor-pointer transition-all group">
+            <h4 class="text-base font-semibold text-gray-900 group-hover:text-blue-700">Django Notification</h4>
+            <p class="text-sm text-gray-600 truncate group-hover:text-gray-800">Your email was sent successfully...</p>
+            <span class="text-xs text-gray-400">2 hours ago</span>
+          </li>
+          <li class="px-5 py-4 hover:bg-blue-50 cursor-pointer transition-all group">
+            <h4 class="text-base font-semibold text-gray-900 group-hover:text-blue-700">Support Team</h4>
+            <p class="text-sm text-gray-600 truncate group-hover:text-gray-800">Thank you for contacting us.</p>
+            <span class="text-xs text-gray-400">1 day ago</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Email Detail -->
+      <section class="flex-1 p-6 md:p-8 overflow-y-auto bg-gradient-to-b from-white to-blue-50">
+        <div class="bg-white p-6 rounded-xl shadow-md transition hover:shadow-xl">
+          <h2 class="text-2xl font-bold text-gray-900 mb-1">Django Notification</h2>
+          <p class="text-sm text-gray-500 mb-6">From: noreply@engageai.com</p>
+          <div class="text-gray-700 leading-relaxed space-y-4">
+            <p>Hello Parvez,</p>
+            <p>This is a confirmation that your email was sent successfully using the Django mail system.</p>
+            <p>Regards,<br>Engage.AI Team</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- Email Compose Modal -->
+<div id="composeModal" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-xl p-6 space-y-4">
+    <div class="flex justify-between items-center">
+      <h3 class="text-lg font-bold text-gray-800">📨 Compose Email</h3>
+      <button onclick="document.getElementById('composeModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+    </div>
+
+    <form class="space-y-4">
+      <input type="email" placeholder="To" class="w-full border px-4 py-2 rounded-lg focus:ring focus:ring-blue-200 outline-none" required>
+      <input type="text" placeholder="Subject" class="w-full border px-4 py-2 rounded-lg focus:ring focus:ring-blue-200 outline-none">
+      <textarea rows="6" placeholder="Write your message..." class="w-full border px-4 py-2 rounded-lg focus:ring focus:ring-blue-200 outline-none"></textarea>
+      <div class="text-right">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow font-medium">Send</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

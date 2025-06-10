@@ -16,23 +16,28 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      font-size: 18px;
       position: relative;
     }
 
     .container {
       display: flex;
-      background: url("{% static 'image.jpg' %}") no-repeat center center fixed;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 90vh;
+      background: url("{% static 'background.png' %}") no-repeat center center fixed;
       border-radius: 10px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      max-width: 900px;
+      max-width: 1200px;
       width: 100%;
       overflow: hidden;
       backdrop-filter: blur(3px);
-    }
+    } 
 
     .left-section {
       padding: 40px;
-      width: 400px;
+      width: 500px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -42,7 +47,7 @@
     .left-section h1 {
       color: #2c3e50;
       margin-bottom: 10px;
-      font-size: 28px;
+      font-size: 36px;
       text-align: center;
     }
 
@@ -55,7 +60,7 @@
     .left-section p {
       color: #667885;
       margin-bottom: 30px;
-      font-size: 16px;
+      font-size: 20px;
       text-align: center;
     }
 
@@ -69,16 +74,16 @@
       margin-bottom: 8px;
       color: #34495e;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 18px;
     }
 
     .form-group input {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border: 1px solid #e0e0e0;
       border-radius: 6px;
       box-sizing: border-box;
-      font-size: 16px;
+      font-size: 18px;
       transition: border-color 0.3s ease;
     }
 
@@ -106,12 +111,12 @@
 
     .remember-me label {
       color: #667885;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .forgot-password {
       color: #4299e1;
-      font-size: 14px;
+      font-size: 16px;
       margin-left: 98px;
       font-display: inline;
       text-decoration: none;
@@ -123,12 +128,12 @@
 
     .sign-in-button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background-color: #4a5568;
       color: white;
       border: none;
       border-radius: 6px;
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       margin-bottom: 20px;
@@ -141,7 +146,7 @@
 
     .sign-up-link {
       color: #667885;
-      font-size: 14px;
+      font-size: 16px;
       text-align: center;
     }
 
@@ -156,7 +161,7 @@
     }
 
     .right-section {
-      width: 400px;
+      width: 500px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -177,7 +182,9 @@
     }
 
     .right-section img {
-      width: 250px;
+      width: 180px;
+      height: 180px;
+      /* width: 400px; */
       margin-bottom: 20px;
       border: 5px solid #4299e1;
       border-radius: 0;
@@ -189,16 +196,16 @@
 
     .right-section h2 {
       color: #2c3e50;
-      font-size: 20px;
+      font-size: 26px;
       margin-bottom: 10px;
       text-align: center;
     }
 
     .right-section p {
       color: #667885;
-      font-size: 14px;
+      font-size: 18px;
       text-align: center;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .right-section span {
@@ -211,6 +218,7 @@
       left: 50%;
       color: gray;
       text-align: center;
+      font-size: 16px;
       transform: translateX(-50%);
       padding-bottom: 15px;
     }
@@ -219,16 +227,17 @@
       .container {
         flex-direction: column;
         width: 95%;
+        height: auto;
       }
 
       .left-section,
       .right-section {
         width: 100%;
-        padding: 20px;
+        padding: 30px;
       }
 
       .right-section img {
-        width: 200px;
+        width: 220px;
       }
 
       .border-left {
@@ -242,7 +251,6 @@
   <div class="container">
     <div class="left-section">
       <h1 class="h1-text">WELCOME</h1>
-
       <p><em>Your journey to smarter engagement starts</em></p>
 
       <div class="form-group">
@@ -266,7 +274,7 @@
       <button class="sign-in-button">Sign in</button>
 
       <div class="sign-up-link">
-        Don't have an account? <a href="#">Sign up free!</a>
+        Don't have an account? <a href="{% url 'signup_page' %}">Sign up free!</a>
       </div>
     </div>
 

@@ -1,0 +1,8 @@
+Hi {{ name }},
+
+Welcome to WFH Solutions! We help you work smarter, faster, and remotely.
+
+Let us know if you need anything.
+
+Best,  
+WFH Solutions Team

@@ -1,516 +1,837 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Advanced Calendar with Event Delete</title>
-<style>
-  :root {
-    --purple: #6c5ce7;
-    --light-purple: #dcd6ff;
-    --yellow: #ffeaa7;
-    --blue: #74b9ff;
-    --dark-bg: #121212;
-    --dark-text: #eee;
-    --dark-purple: #4834d4;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #a8edea, #fed6e3);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
-    transition: background 0.3s ease;
-  }
-  body.dark {
-    background: #1e1e1e;
-    color: var(--dark-text);
-  }
-  .calendar-container {
-    display: flex;
-    max-width: 1400px;
-    width: 100%;
-    gap: 20px;
-  }
-  /* Sidebar */
-  .event-list-sidebar {
-    width: 320px;
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    overflow-y: auto;
-    max-height: 85vh;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  body.dark .event-list-sidebar {
-    background: #282828;
-    color: var(--dark-text);
-  }
-  .event-list-sidebar h2 {
-    margin-bottom: 12px;
-    font-weight: 700;
-    border-bottom: 2px solid var(--purple);
-    padding-bottom: 8px;
-    color: var(--purple);
-  }
-  body.dark .event-list-sidebar h2 {
-    color: var(--light-purple);
-    border-color: var(--light-purple);
-  }
-  .event-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    border-left: 5px solid var(--purple);
-    padding-left: 12px;
-    font-size: 0.95rem;
-    cursor: default;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
-  }
-  .event-item span {
-    flex-grow: 1;
-    user-select: none;
-  }
-  .event-item:focus, .event-item:hover {
-    background: var(--light-purple);
-    outline: none;
-  }
-  body.dark .event-item:focus, body.dark .event-item:hover {
-    background: #3a3a5a;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Calendar with Events & Dark Mode</title>
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+   :root {
+  --purple: #1c5a94;
+  --dark-purple: #1c4666;
+  --light-purple: #69c0f6;
+  --background-light: #aed6f1;
+  --background-dark: #1a202c;
+  --text-light: #ffffff;
+  --text-dark: #2d3748;
+  --border-color: #e2e8f0;
+  --event-bg: #3e95d8;
+  --event-bg-dark: #22669d;
+}
 
-  .event-item.delete-red {
-    border-color: #e74c3c;
-  }
-  .delete-btn {
-    background: #e74c3c;
-    border: none;
-    color: white;
-    font-size: 0.85rem;
-    padding: 3px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s ease;
-  }
-  .delete-btn:hover, .delete-btn:focus {
-    background: #c0392b;
-    outline: none;
-  }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-  /* Calendar main */
-  .calendar {
-    flex-grow: 1;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    max-height: 85vh;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  body.dark .calendar {
-    background: #282828;
-    color: var(--dark-text);
-  }
-  /* Header with month-year and nav */
-  .calendar-header {
-    background: var(--purple);
-    color: white;
-    text-align: center;
-    padding: 20px 60px;
-    font-size: 2em;
-    font-weight: 700;
-    position: relative;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-  }
-  .calendar-header .month-year {
-    background: var(--light-purple);
-    color: var(--purple);
-    border-radius: 15px;
-    padding: 8px 20px;
-    box-shadow: 0 5px 15px rgba(108,92,231,0.4);
-    user-select: text;
-    min-width: 220px;
-  }
-  body.dark .calendar-header .month-year {
-    background: var(--dark-purple);
-    color: #dcd6ff;
-    box-shadow: 0 5px 15px rgba(72,52,212,0.7);
-  }
-  .calendar-header button {
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    color: white;
-    font-size: 1.6em;
-    padding: 10px 18px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .calendar-header button:hover, .calendar-header button:focus {
-    background: rgba(255, 255, 255, 0.6);
-    outline: none;
-  }
+body.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+}
 
-  /* Dark mode toggle button */
-  .dark-mode-toggle {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    background: var(--light-purple);
-    color: var(--purple);
-    border: none;
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    box-shadow: 0 5px 15px rgba(108,92,231,0.5);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-  }
-  body.dark .dark-mode-toggle {
-    background: var(--dark-purple);
-    color: #dcd6ff;
-    box-shadow: 0 5px 15px rgba(72,52,212,0.7);
-  }
-  .dark-mode-toggle:hover, .dark-mode-toggle:focus {
-    filter: brightness(1.2);
-    outline: none;
-  }
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  padding: 20px;
+  gap: 20px;
+}
 
-  /* Weekdays and days grid */
-  .weekdays, .days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    padding: 15px 0;
-    user-select: none;
-  }
-  .weekdays div {
-    font-weight: 700;
-    color: #555;
-    font-size: 1.1em;
-  }
-  body.dark .weekdays div {
-    color: #aaa;
-  }
-  .days div {
-    padding: 20px 5px;
-    margin: 5px;
-    border-radius: 12px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 1.1em;
-    position: relative;
-    cursor: pointer;
-    min-height: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .days div:hover {
-    background: #dfe6e9;
-    transform: scale(1.05);
-  }
-  body.dark .days div:hover {
-    background: #3a3a5a;
-  }
+.main-content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* removed spacing between header and calendar */
+}
 
-  /* Today highlight with subtle circle */
-  .today {
-    font-weight: 700;
-    color: var(--purple);
-  }
-  .today::before {
-    content: "";
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    background: var(--light-purple);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-  }
-  body.dark .today::before {
-    background: var(--dark-purple);
-  }
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 16px 16px;
+  margin-bottom: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  /* Events inside days */
-  .event {
-    background-color: var(--yellow);
-    border-radius: 10px;
-    padding: 5px 10px;
-    margin-top: 6px;
-    font-size: 0.85em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 90%;
-    word-wrap: break-word;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  body.dark .event {
-    background-color: #f9e79f;
-    color: #222;
-  }
+body.dark-mode .header-main {
+  background-color: #2d3748;
+  color: var(--text-light);
+}
 
-  /* Responsive */
-  @media (max-width: 900px) {
-    .calendar-container {
-      flex-direction: column;
-      align-items: center;
-    }
-    .event-list-sidebar {
-      width: 100%;
-      max-height: none;
-      margin-bottom: 20px;
-    }
-    .calendar {
-      max-height: none;
-      width: 100%;
-    }
-    .calendar-header {
-      font-size: 1.5em;
-      padding: 15px 40px;
-    }
-    .weekdays div {
-      font-size: 1em;
-    }
-    .days div {
-      padding: 15px 0;
-      min-height: 55px;
-      font-size: 1em;
-    }
-  }
+.welcome h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #2d3748;
+}
+
+body.dark-mode .welcome h1 {
+  color: var(--text-light);
+}
+
+.welcome p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+body.dark-mode .welcome p {
+  color: #a0aec0;
+}
+
+.user-profile img {
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+  object-fit: cover;
+  border: 2px solid var(--purple);
+}
+
+.sidebar {
+  background-color: #05638b;
+  border-radius: 16px;
+  padding: 20px;
+  width: 300px;
+  height: calc(100vh - 40px - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: sticky;
+  top: 20px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  overflow-y: auto;
+  border: 2px solid var(--border-color);
+}
+
+body.dark-mode .sidebar {
+  background-color: #2d3748;
+  color: var(--text-light);
+  border-color: var(--dark-purple);
+}
+
+.sidebar:hover {
+  border-color: var(--purple);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+body.dark-mode .sidebar:hover {
+  border-color: var(--light-purple);
+}
+
+.sidebar button,
+.sidebar a.sidebar-link {
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  padding: 12px 16px;
+  font-weight: 600;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.dark-mode .sidebar button,
+body.dark-mode .sidebar a.sidebar-link {
+  background-color: #4a5568;
+  color: var(--text-light);
+  border-color: #4a5568;
+}
+
+.sidebar button:hover,
+.sidebar a.sidebar-link:hover {
+  background-color: var(--light-purple);
+  color: var(--dark-purple);
+  transform: translateY(-1px);
+  border-color: var(--purple);
+}
+
+body.dark-mode .sidebar button:hover,
+body.dark-mode .sidebar a.sidebar-link:hover {
+  background-color: var(--event-bg-dark);
+  color: white;
+  border-color: var(--light-purple);
+}
+
+.bottom-sidebar-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+body.dark-mode .bottom-sidebar-buttons {
+  border-color: #4a5568;
+}
+
+.sidebar-home,
+.sidebar-logout {
+  color: var(--dark-purple);
+  font-weight: 600;
+}
+
+body.dark-mode .sidebar-home,
+body.dark-mode .sidebar-logout {
+  background-color: #4a5568;
+  color: var(--light-purple);
+  border-color: #4a5568;
+}
+
+.sidebar-home:hover,
+.sidebar-logout:hover {
+  background-color: var(--light-purple);
+  color: var(--dark-purple);
+  border-color: var(--purple);
+}
+
+body.dark-mode .sidebar-home:hover,
+body.dark-mode .sidebar-logout:hover {
+  background-color: var(--event-bg-dark);
+  color: white;
+  border-color: var(--light-purple);
+}
+
+.calendar {
+  flex: 2;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+  padding: 32px;
+  box-sizing: border-box;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 0 !important; /* forcefully remove any top margin */
+}
+
+body.dark-mode .calendar {
+  background-color: #2d3748;
+  color: var(--text-light);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.calendar-header button {
+  background-color: var(--purple);
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.calendar-header button:hover,
+.calendar-header button:focus {
+  background-color: var(--dark-purple);
+  outline: none;
+}
+
+.month-year {
+  font-weight: 750;
+  font-size: 1.95rem;
+  user-select: none;
+  flex-grow: 1;
+  background-color: var(--purple);
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px 0;
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  user-select: none;
+  transition: color 0.3s ease;
+  color: var(--purple);
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.dark-mode-toggle:hover,
+.dark-mode-toggle:focus {
+  color: var(--dark-purple);
+  outline: none;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 12px;
+  user-select: none;
+  font-size: 1.1rem;
+}
+
+body.dark-mode .weekdays {
+  color: var(--light-purple);
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 14px;
+  flex-grow: 1;
+  user-select: none;
+  outline: none;
+}
+
+.days > div {
+  background-color: #e9e9f3;
+  padding: 20px 10px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .days > div {
+  background-color: #4a5568;
+  color: var(--text-light);
+}
+
+.days > div.today {
+  border: 2px solid var(--purple);
+  font-weight: 700;
+  background-color: var(--light-purple);
+  color: var(--dark-purple);
+}
+
+body.dark-mode .days > div.today {
+  background-color: var(--event-bg-dark);
+  color: var(--text-light);
+  border-color: var(--light-purple);
+}
+
+.days > div.selected {
+  background-color: var(--purple);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 0 12px var(--purple);
+  outline: none;
+}
+
+.days > div:hover:not(.selected),
+.days > div:focus:not(.selected) {
+  background-color: var(--light-purple);
+  color: var(--dark-purple);
+  outline: none;
+}
+
+body.dark-mode .days > div:hover:not(.selected),
+body.dark-mode .days > div:focus:not(.selected) {
+  background-color: var(--event-bg-dark);
+  color: var(--text-light);
+}
+
+.days > div.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.event-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--purple);
+  border-radius: 50%;
+  margin: 4px auto 0;
+}
+
+body.dark-mode .event-dot {
+  background-color: var(--light-purple);
+}
+
+.event-list-in-calendar {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+body.dark-mode .event-list-in-calendar {
+  border-color: #4a5568;
+}
+
+.event-list-in-calendar h2 {
+  margin-top: 0;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+#event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-item {
+  background-color: var(--light-purple);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 500;
+  color: var(--dark-purple);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .event-item {
+  background-color: var(--event-bg-dark);
+  color: var(--text-light);
+}
+
+.event-item:focus {
+  outline: 2px solid var(--purple);
+  background-color: var(--purple);
+  color: white;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--dark-purple);
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+  background-color: var(--purple);
+  color: white;
+  outline: none;
+}
+
+body.dark-mode .delete-btn {
+  color: var(--light-purple);
+}
+
+body.dark-mode .delete-btn:hover,
+body.dark-mode .delete-btn:focus {
+  background-color: var(--light-purple);
+  color: var(--dark-purple);
+}
+
+.add-event-container {
+  margin-top: 15px;
+  display: flex;
+  gap: 8px;
+}
+
+.add-event-input {
+  flex-grow: 1;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 2px solid var(--purple);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #f0f0f0;
+  color: var(--text-dark);
+}
+
+body.dark-mode .add-event-input {
+  background-color: #4a5568;
+  color: var(--text-light);
+  border-color: var(--light-purple);
+}
+
+.add-event-input:focus {
+  border-color: var(--dark-purple);
+}
+
+.add-event-button {
+  padding: 8px 18px;
+  background-color: var(--purple);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.add-event-button:hover,
+.add-event-button:focus {
+  background-color: var(--dark-purple);
+  outline: none;
+}
+
 </style>
 </head>
 <body>
+  <header class="header-main">
+        <div class="welcome">
+            <h1>Good Morning, Priyanka! Welcome Back!</h1>
+            <p>Smart Connections: Respecting Preferences, Building Trust</p>
+        </div>
+        <div class="user-profile">
+            <img src="https://via.placeholder.com/80/f39c12/ffffff?text=P" alt="Priyanka's Profile Picture" />
+        </div>
+  </header>
 
-<div class="calendar-container">
-  <!-- Left sidebar: event list -->
-  <aside class="event-list-sidebar" aria-label="Event List">
-    <h2>Events</h2>
-    <div id="eventListSidebar">No events added.</div>
-  </aside>
+  <div class="content-wrapper">
+    <aside class="sidebar">
+          <button><i class="fas fa-chart-line"></i> Generate Leads</button>
+          <button><i class="fas fa-check-circle"></i> Approve Campaigns</button>
+          <a href="#" class="sidebar-link"><i class="fas fa-shield-alt"></i> Contact Policy (Admin)</a>
+          <a href="#" class="sidebar-link"><i class="fas fa-network-wired"></i> Access Matrix (Admin)</a>
+          <a href="#" class="sidebar-link"><i class="fas fa-file-alt"></i> Reports Hub</a>
+          <a href="#" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Campaign Calendar</a>
+          <button><i class="fas fa-book"></i> Help Book</button>
+          <div class="bottom-sidebar-buttons">
+            <button class="sidebar-home"><i class="fas fa-home"></i> Home</button>
+            <button class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+          </div>
+    </aside>
 
-  <!-- Main calendar -->
-  <main class="calendar" role="main" aria-label="Calendar">
-    <div class="calendar-header">
-      <button class="prev-btn" aria-label="Previous month">&#8249;</button>
-      <div class="month-year" id="monthYear">Loading...</div>
-      <button class="next-btn" aria-label="Next month">&#8250;</button>
-      <button class="dark-mode-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button>
+    <div class="main-content-area">
+      <main class="calendar" role="application" aria-label="Calendar">
+          <header class="calendar-header">
+            <button id="prev-month" aria-label="Previous month">&lt;</button>
+            <div id="month-year" class="month-year" aria-live="polite" aria-atomic="true"></div>
+            <button id="next-month" aria-label="Next month">&gt;</button>
+            <button
+              id="dark-mode-toggle"
+              class="dark-mode-toggle"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+            >🌙</button>
+          </header>
+
+          <div class="weekdays" aria-hidden="true">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+
+          <div class="days" id="days" tabindex="0" aria-label="Calendar days grid"></div>
+
+          <div class="event-list-in-calendar">
+              <h2>Events for Selected Date</h2>
+              <div id="event-list" aria-live="polite" aria-relevant="additions removals"></div>
+              <div class="add-event-container">
+                  <input
+                      id="add-event-input"
+                      type="text"
+                      class="add-event-input"
+                      placeholder="Add event..."
+                      aria-label="Add event input"
+                  />
+                  <button id="add-event-btn" class="add-event-button" aria-label="Add event button">Add</button>
+              </div>
+          </div>
+      </main>
     </div>
+  </div>
 
-    <div class="weekdays" aria-hidden="true">
-      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-    </div>
+  <script>
+    (() => {
+      const daysContainer = document.getElementById('days');
+      const monthYearDisplay = document.getElementById('month-year');
+      const prevMonthBtn = document.getElementById('prev-month');
+      const nextMonthBtn = document.getElementById('next-month');
+      const eventList = document.getElementById('event-list');
+      const addEventInput = document.getElementById('add-event-input');
+      const addEventBtn = document.getElementById('add-event-btn');
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-    <div class="days" id="calendarDays" tabindex="0" aria-label="Days of month">
-      <!-- Days go here -->
-    </div>
-  </main>
-</div>
+      let today = new Date();
+      let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      let currentYear = selectedDate.getFullYear();
+      let currentMonth = selectedDate.getMonth();
 
-<script>
-  const monthYear = document.getElementById("monthYear");
-  const calendarDays = document.getElementById("calendarDays");
-  const prevBtn = document.querySelector(".prev-btn");
-  const nextBtn = document.querySelector(".next-btn");
-  const darkToggle = document.querySelector(".dark-mode-toggle");
-  const eventListSidebar = document.getElementById("eventListSidebar");
+      // Store events as a map: 'YYYY-MM-DD' => [event1, event2,...]
+      let events = {};
 
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-
-  let date = new Date();
-  let displayedMonth = date.getMonth();
-  let displayedYear = date.getFullYear();
-
-  // Events stored as { "YYYY-MM-DD": [{title: "...", color: "yellow"}, ...] }
-  let events = JSON.parse(localStorage.getItem("calendarEvents")) || {};
-
-  function saveEventsToLocalStorage() {
-    localStorage.setItem("calendarEvents", JSON.stringify(events));
-  }
-
-  function formatDateKey(year, month, day) {
-    // Format as YYYY-MM-DD with leading zeros
-    const mm = (month + 1).toString().padStart(2, "0");
-    const dd = day.toString().padStart(2, "0");
-    return `${year}-${mm}-${dd}`;
-  }
-
-  function renderMonthlyCalendar(year, month) {
-    const today = new Date();
-    const firstDay = new Date(year, month, 1);
-    const lastDate = new Date(year, month + 1, 0).getDate();
-    const startDay = firstDay.getDay();
-
-    monthYear.textContent = `${months[month]} ${year}`;
-
-    // Fade out old days for smooth effect
-    calendarDays.style.opacity = 0;
-
-    setTimeout(() => {
-      calendarDays.innerHTML = "";
-
-      // Empty slots before first day
-      for (let i = 0; i < startDay; i++) {
-        calendarDays.innerHTML += `<div aria-hidden="true"></div>`;
+      // Format date as YYYY-MM-DD string
+      function formatDate(year, month, day) {
+        const m = month + 1;
+        const mm = m < 10 ? '0' + m : m;
+        const dd = day < 10 ? '0' + day : day;
+        return `${year}-${mm}-${dd}`;
       }
 
-      for (let day = 1; day <= lastDate; day++) {
-        const key = formatDateKey(year, month, day);
-        const dayDiv = document.createElement("div");
-        dayDiv.tabIndex = 0;
-        dayDiv.setAttribute("role", "button");
-        dayDiv.setAttribute("aria-label", `Day ${day}, ${months[month]} ${year}`);
-        dayDiv.className = "";
+      // Load events from localStorage
+      function loadEvents() {
+        const stored = localStorage.getItem('calendarEvents');
+        if (stored) {
+          events = JSON.parse(stored);
+        }
+      }
 
-        if (
-          day === today.getDate() &&
-          month === today.getMonth() &&
-          year === today.getFullYear()
-        ) {
-          dayDiv.classList.add("today");
+      // Save events to localStorage
+      function saveEvents() {
+        localStorage.setItem('calendarEvents', JSON.stringify(events));
+      }
+
+      // Render month-year heading
+      function renderMonthYear() {
+        const monthName = selectedDate.toLocaleString('default', { month: 'long' });
+        monthYearDisplay.textContent = `${monthName} ${currentYear}`;
+      }
+
+      // Render days grid
+      function renderDays() {
+        daysContainer.innerHTML = '';
+        const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+        const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+        const firstWeekDay = firstDayOfMonth.getDay();
+        const daysInMonth = lastDayOfMonth.getDate();
+
+        // Calculate days from previous month to show
+        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+        // Total grid cells = 42 (6 weeks * 7 days)
+        const totalCells = 42;
+
+        for (let i = 0; i < totalCells; i++) {
+          const dayDiv = document.createElement('div');
+          dayDiv.setAttribute('tabindex', '-1');
+
+          let dayNumber;
+          let dateYear = currentYear;
+          let dateMonth = currentMonth;
+          let isDisabled = false;
+
+          if (i < firstWeekDay) {
+            // Days from previous month
+            dayNumber = prevMonthLastDay - firstWeekDay + i + 1;
+            dateMonth = currentMonth - 1;
+            isDisabled = true;
+            if (dateMonth < 0) {
+              dateMonth = 11;
+              dateYear--;
+            }
+          } else if (i >= firstWeekDay + daysInMonth) {
+            // Days from next month
+            dayNumber = i - (firstWeekDay + daysInMonth) + 1;
+            dateMonth = currentMonth + 1;
+            isDisabled = true;
+            if (dateMonth > 11) {
+              dateMonth = 0;
+              dateYear++;
+            }
+          } else {
+            // Current month days
+            dayNumber = i - firstWeekDay + 1;
+          }
+
+          dayDiv.textContent = dayNumber;
+          if (isDisabled) {
+            dayDiv.classList.add('disabled');
+          } else {
+            const thisDate = new Date(dateYear, dateMonth, dayNumber);
+            const thisDateStr = formatDate(dateYear, dateMonth, dayNumber);
+
+            // Highlight today
+            if (
+              thisDate.getFullYear() === today.getFullYear() &&
+              thisDate.getMonth() === today.getMonth() &&
+              thisDate.getDate() === today.getDate()
+            ) {
+              dayDiv.classList.add('today');
+            }
+
+            // Highlight selected day
+            if (
+              thisDate.getFullYear() === selectedDate.getFullYear() &&
+              thisDate.getMonth() === selectedDate.getMonth() &&
+              thisDate.getDate() === selectedDate.getDate()
+            ) {
+              dayDiv.classList.add('selected');
+              dayDiv.setAttribute('tabindex', '0');
+            }
+
+            // Add event dot if events exist for this day
+            if (events[thisDateStr] && events[thisDateStr].length > 0) {
+              const dot = document.createElement('span');
+              dot.classList.add('event-dot');
+              dayDiv.appendChild(dot);
+            }
+
+            dayDiv.addEventListener('click', () => {
+              selectedDate = thisDate;
+              currentYear = selectedDate.getFullYear();
+              currentMonth = selectedDate.getMonth();
+              renderMonthYear();
+              renderDays();
+              renderEventList();
+            });
+
+            dayDiv.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                dayDiv.click();
+              }
+            });
+          }
+
+          daysContainer.appendChild(dayDiv);
+        }
+      }
+
+      // Render event list for selected date
+      function renderEventList() {
+        eventList.innerHTML = '';
+        const selectedDateStr = formatDate(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+        const dayEvents = events[selectedDateStr] || [];
+
+        if (dayEvents.length === 0) {
+          const noEventsMsg = document.createElement('p');
+          noEventsMsg.textContent = 'No events for this day.';
+          eventList.appendChild(noEventsMsg);
+          return;
         }
 
-        const dayNumberDiv = document.createElement("div");
-        dayNumberDiv.textContent = day;
-        dayDiv.appendChild(dayNumberDiv);
+        dayEvents.forEach((evt, index) => {
+          const eventDiv = document.createElement('div');
+          eventDiv.classList.add('event-item');
+          eventDiv.setAttribute('tabindex', '0');
+          eventDiv.textContent = evt;
 
-        // Multiple events can be shown
-        if (events[key]) {
-          events[key].forEach(ev => {
-            const eventDiv = document.createElement("div");
-            eventDiv.className = "event";
-            eventDiv.textContent = ev.title;
-            dayDiv.appendChild(eventDiv);
+          const deleteBtn = document.createElement('button');
+          deleteBtn.classList.add('delete-btn');
+          deleteBtn.setAttribute('aria-label', `Delete event: ${evt}`);
+          deleteBtn.textContent = '×';
+          deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dayEvents.splice(index, 1);
+            if (dayEvents.length === 0) {
+              delete events[selectedDateStr];
+            } else {
+              events[selectedDateStr] = dayEvents;
+            }
+            saveEvents();
+            renderEventList();
+            renderDays();
           });
-        }
 
-        // Add event on click (prompt)
-        dayDiv.addEventListener("click", () => {
-          addOrEditEvent(year, month, day);
+          eventDiv.appendChild(deleteBtn);
+          eventList.appendChild(eventDiv);
         });
-
-        calendarDays.appendChild(dayDiv);
       }
 
-      calendarDays.style.opacity = 1;
-    }, 200);
-  }
+      // Add event for selected date
+      function addEvent() {
+        const text = addEventInput.value.trim();
+        if (!text) return;
+        const selectedDateStr = formatDate(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+        if (!events[selectedDateStr]) {
+          events[selectedDateStr] = [];
+        }
+        events[selectedDateStr].push(text);
+        saveEvents();
+        addEventInput.value = '';
+        renderEventList();
+        renderDays();
+        addEventInput.focus();
+      }
 
-  // Update sidebar event list with delete buttons
-  function updateEventListSidebar() {
-    eventListSidebar.innerHTML = "";
-    const dates = Object.keys(events).sort();
-    if (dates.length === 0) {
-      eventListSidebar.textContent = "No events added.";
-      return;
-    }
-
-    dates.forEach(dateStr => {
-      events[dateStr].forEach((ev, index) => {
-        const div = document.createElement("div");
-        div.className = "event-item";
-        div.style.borderLeft = `5px solid var(--yellow)`;
-        div.tabIndex = 0;
-
-        const eventText = document.createElement("span");
-        eventText.textContent = `${dateStr}: ${ev.title}`;
-        div.appendChild(eventText);
-
-        const delBtn = document.createElement("button");
-        delBtn.className = "delete-btn";
-        delBtn.textContent = "Delete";
-        delBtn.setAttribute("aria-label", `Delete event ${ev.title} on ${dateStr}`);
-        delBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          deleteEvent(dateStr, index);
-        });
-
-        div.appendChild(delBtn);
-        eventListSidebar.appendChild(div);
+      // Navigate months
+      prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        selectedDate = new Date(currentYear, currentMonth, 1);
+        renderMonthYear();
+        renderDays();
+        renderEventList();
       });
-    });
-  }
 
-  function addOrEditEvent(year, month, day) {
-    const key = formatDateKey(year, month, day);
-    let existingTitles = events[key]?.map(ev => ev.title).join(", ") || "";
-    let eventTitle = prompt(
-      `Add event for ${key}\nExisting: ${existingTitles}\n\nEnter event title (Leave blank to cancel):`
-    );
-    if (eventTitle && eventTitle.trim() !== "") {
-      if (!events[key]) events[key] = [];
-      events[key].push({ title: eventTitle.trim(), color: "yellow" });
-      saveEventsToLocalStorage();
-      renderMonthlyCalendar(displayedYear, displayedMonth);
-      updateEventListSidebar();
-    }
-  }
+      nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        selectedDate = new Date(currentYear, currentMonth, 1);
+        renderMonthYear();
+        renderDays();
+        renderEventList();
+      });
 
-  function deleteEvent(dateStr, eventIndex) {
-    if (!events[dateStr]) return;
-    events[dateStr].splice(eventIndex, 1);
-    if (events[dateStr].length === 0) delete events[dateStr];
-    saveEventsToLocalStorage();
-    updateEventListSidebar();
-    renderMonthlyCalendar(displayedYear, displayedMonth);
-  }
+      // Add event button click
+      addEventBtn.addEventListener('click', addEvent);
 
-  prevBtn.addEventListener("click", () => {
-    displayedMonth--;
-    if (displayedMonth < 0) {
-      displayedMonth = 11;
-      displayedYear--;
-    }
-    renderMonthlyCalendar(displayedYear, displayedMonth);
-  });
+      // Add event on Enter key in input
+      addEventInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addEvent();
+        }
+      });
 
-  nextBtn.addEventListener("click", () => {
-    displayedMonth++;
-    if (displayedMonth > 11) {
-      displayedMonth = 0;
-      displayedYear++;
-    }
-    renderMonthlyCalendar(displayedYear, displayedMonth);
-  });
+      // Dark mode toggle
+      darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        darkModeToggle.textContent = isDark ? '☀️' : '🌙';
+        darkModeToggle.setAttribute('aria-pressed', isDark);
+      });
 
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-  });
+      // Load events on start
+      loadEvents();
 
-  // Initialize calendar
-  renderMonthlyCalendar(displayedYear, displayedMonth);
-  updateEventListSidebar();
-
-</script>
+      // Initial render
+      renderMonthYear();
+      renderDays();
+      renderEventList();
+    })();
+  </script>
 </body>
 </html>
