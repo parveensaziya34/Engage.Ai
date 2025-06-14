@@ -10,6 +10,7 @@ urlpatterns = [
     path('calender/',calender_page, name='calender_page'),
     path('email/',email_page, name="email_page"),
     path('chat_reciever/',chatbot_reciever_page, name='chatbot_reciever_page'),
+    path('chatbot/', chatbot_page, name="chatbot_page"),
 
 
 

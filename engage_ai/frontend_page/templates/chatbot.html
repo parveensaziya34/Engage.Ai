@@ -592,11 +592,12 @@
       </div>
 
       <div class="chat-input">
-        <span class="clip" title="Attach file">📎</span>
-        <input type="text" value="Count of customer with car insurance expiry in 30 days" readonly />
-        <span class="emoji" title="Smile emoji">😊</span>
-        <span class="send" title="Send"><i class="fa-solid fa-paper-plane"></i></span>
-      </div>
+  <span class="clip" title="Attach file">📎</span>
+  <input type="text" id="user-input" placeholder="Ask your question..." />
+  <span class="emoji" title="Smile emoji">😊</span>
+  <span class="send" title="Send" onclick="sendQuestion()"><i class="fa-solid fa-paper-plane"></i></span>
+</div>
+
     </div>
   </div>
 
@@ -682,6 +683,65 @@
     document.addEventListener('DOMContentLoaded', () => {
         updateUserProfile('engage_ai');
     });
+    function sendQuestion() {
+  const inputField = document.getElementById('user-input');
+  const question = inputField.value.trim();
+  if (!question) return;
+
+  // Add user's message to chat
+  const chatContainer = document.querySelector('.chat-messages-engage_ai');
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-message user-message';
+  userMsg.innerHTML = `
+    <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
+    <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
+      ${question}
+      <div class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+    </div>
+  `;
+  chatContainer.appendChild(userMsg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  // Clear input
+  inputField.value = '';
+
+  // Send question to Django backend
+  fetch("/chatbot/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-CSRFToken": "{{ csrf_token }}"
+    },
+    body: new URLSearchParams({ question: question })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-message bot-message';
+    botMsg.innerHTML = `
+      <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+      <div class="message-content">
+        ${data.response}
+        <div class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+      </div>
+    `;
+    chatContainer.appendChild(botMsg);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  })
+  .catch(err => {
+    const errMsg = document.createElement('div');
+    errMsg.className = 'chat-message bot-message';
+    errMsg.innerHTML = `
+      <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+      <div class="message-content">
+        Oops! Something went wrong.
+        <div class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+      </div>
+    `;
+    chatContainer.appendChild(errMsg);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  });
+}
   </script>
 </body>
 </html>
