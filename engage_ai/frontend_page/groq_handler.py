@@ -2,7 +2,7 @@
 import sqlite3
 from groq import Groq
 
-client = Groq(api_key="your-groq-api-key")  # Use ENV variable in production
+client = Groq(api_key="api_key")  # Use ENV variable in production
 
 sql_assistant_prompt = (
     "You are an intelligent SQL assistant who can generate SQL queries from natural language. "
@@ -45,8 +45,8 @@ sql_assistant_prompt = (
     )  # Keep the same as above
 nl_response_prompt = "You are an assistant that can turn raw SQL query results into clear, conversational English for non-technical users. "    # Keep same
 
-database = sqlite3.connect("May25.db")
-cursor = database.cursor()
+#database = sqlite3.connect("May25.db")
+#cursor = database.cursor()
 
 def generate_sql_from_nl(nl_query):
     response = client.chat.completions.create(
@@ -61,8 +61,10 @@ def generate_sql_from_nl(nl_query):
     return response.choices[0].message.content.strip()
 
 def execute_sql(query):
-    cursor.execute(query)
-    return cursor.fetchall()
+    with sqlite3.connect("May25.db") as connection:
+        cursor=connection.cursor()
+        cursor.execute(query)
+        return cursor.fetchall()
 
 def generate_nl_response(nl_question, sql_output):
     result_str = "\n".join([", ".join(map(str, row)) for row in sql_output])
