@@ -1,23 +1,15 @@
-"""
-URL configuration for engage_ai project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import path
+from frontend_page.views import login_page,access_page,signup_page,chatbot_page, dashboard_page, logout_user,calender_page, control_page
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('frontend_page.urls')),
+    path('', login_page,name = "login_page"),
+    path('signup/', signup_page, name='signup_page'),
+
+    path('dashboard/', dashboard_page, name='dashboard_page'),
+    path('access/', access_page, name='access_page'),
+    path('chatbot/', chatbot_page, name='chatbot_page'),
+    path('logout/', logout_user, name='logout_user'),
+    path('control/', control_page, name='control_page'),
+    path('calender/', calender_page, name='calender_page'),
+
+
 ]
