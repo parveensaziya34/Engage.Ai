@@ -7,64 +7,85 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   {% load static %}
   <style>
+    /* Your new page CSS + old animations */
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: rgba(255, 255, 255, 0.95);       
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-size: 18px;
       position: relative;
     }
 
-   .container {
+    .container {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 90vh;
-      background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("{% static 'background.png' %}") no-repeat center center / cover;
+      background: url("{% static 'image.jpg' %}") no-repeat center center fixed;
       border-radius: 10px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      max-width: 1600px;
+      max-width: 900px;
       width: 100%;
       overflow: hidden;
       backdrop-filter: blur(3px);
+      
+      /* Animation from old page */
+      opacity: 0;
+      animation: fadeSlideIn 1s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     .left-section {
       padding: 40px;
-      width: 550px; /* Increased width of left section */
+      width: 400px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      align-items: center; /* Changed to center for "WELCOME" */
-      margin-right: 80px;
+      align-items: flex-start;
+
+      /* Animation from old page */
+      opacity: 0;
+      animation: fadeInLeft 1s ease forwards;
+      animation-delay: 0.2s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInLeft {
+      0% { opacity: 0; transform: translateX(-40px); }
+      100% { opacity: 1; transform: translateX(0); }
     }
 
     .left-section h1 {
       color: #2c3e50;
       margin-bottom: 10px;
-      font-size: 44px;
-      text-align: center; /* Changed to center for "WELCOME" */
-      width: 100%;
+      font-size: 28px;
+      text-align: center;
+
+      /* Pulse animation */
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     .h1-text {
-      text-align: center; /* Changed to center for "WELCOME" */
-      margin-left: auto; /* Centered */
-      margin-right: auto; /* Centered */
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .left-section p {
       color: #667885;
       margin-bottom: 30px;
-      font-size: 24px;
-      text-align: center; /* Changed to center for paragraph */
-      width: 100%;
+      font-size: 16px;
+      text-align: center;
     }
 
     .form-group {
@@ -77,24 +98,22 @@
       margin-bottom: 8px;
       color: #34495e;
       font-weight: 500;
-      font-size: 26px;
-      text-align: left; /* Keep labels left-aligned for input fields */
+      font-size: 14px;
     }
 
     .form-group input {
-      width: 100%;
-      max-width: 550px; /* Increased max-width for input boxes */
-      padding: 18px; /* Increased padding */
+      width: 150%;
+      padding: 10px;
       border: 1px solid #e0e0e0;
-      border-radius: 6px;
+      border-radius: 8px;
       box-sizing: border-box;
-      font-size: 26px; /* Increased font size */
+      font-size: 16px;
       transition: border-color 0.3s ease;
     }
 
     .form-group input:focus {
       outline: none;
-      border-color: #086191;
+      border-color: #4299e1;
       box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
     }
 
@@ -103,8 +122,6 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
-      width: 100%;
-      max-width: 550px; /* Ensured form options align with wider inputs */
     }
 
     .remember-me {
@@ -112,21 +129,19 @@
       align-items: center;
     }
 
-    .remember-me input[type="checkbox"] { /* Targeted specifically for checkbox */
-      width: 20px; /* Increased width */
-      height: 20px; /* Increased height */
-      margin-right: 10px; /* Adjusted margin for better spacing */
-      accent-color: #086191; /* Changes the color of the checked box */
+    .remember-me input {
+      margin-right: 8px;
     }
 
     .remember-me label {
       color: #667885;
-      font-size: 22px;
+      font-size: 14px;
     }
 
     .forgot-password {
       color: #4299e1;
-      font-size: 22px;
+      font-size: 14px;
+      font-display: inline;
       text-decoration: none;
     }
 
@@ -135,14 +150,13 @@
     }
 
     .sign-in-button {
-      width: 100%;
-      max-width: 550px; /* Ensured button aligns with wider inputs */
-      padding: 18px; /* Increased padding */
+      width: 150%;
+      padding: 12px;
       background-color: #4a5568;
       color: white;
       border: none;
       border-radius: 6px;
-      font-size: 30px; /* Increased font size */
+      font-size: 18px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       margin-bottom: 20px;
@@ -150,15 +164,13 @@
     }
 
     .sign-in-button:hover {
-      background-color: #036d8d;
+      background-color: #3182ce;
     }
 
     .sign-up-link {
       color: #667885;
-      font-size: 22px;
-      text-align: center; /* Changed to center for sign-up link */
-      width: 100%;
-      max-width: 550px; /* Ensured link aligns with wider inputs */
+      font-size: 14px;
+      text-align: center;
     }
 
     .sign-up-link a {
@@ -172,7 +184,7 @@
     }
 
     .right-section {
-      width: 500px;
+      width: 400px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -180,57 +192,57 @@
       padding: 20px;
       box-sizing: border-box;
       position: relative;
-      margin-left: 120px; /* Increased from 100px */
+
+      /* Animation from old page */
+      opacity: 0;
+      animation: fadeInRight 1s ease forwards;
+      animation-delay: 0.4s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInRight {
+      0% { opacity: 0; transform: translateX(40px); }
+      100% { opacity: 1; transform: translateX(0); }
     }
 
     .right-section::before {
       content: "";
       position: absolute;
-      top: 7%;
-      bottom: 7%;
-      left: calc(8% - 120px); /* Adjusted to match new margin-left */
+      top: 15%;
+      bottom: 15%;
+      left: 8%;
       width: 1px;
-      background-color: rgb(145, 149, 145);
+      background-color: lightgreen;
     }
 
     .right-section img {
-      width: 300px;
-      height: 300px;
+      width: 250px;
       margin-bottom: 20px;
       border: 5px solid #4299e1;
       border-radius: 0;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       padding: 10px;
       box-sizing: border-box;
-      animation: zoomInOut 5s ease-in-out infinite;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
     }
 
-    @keyframes zoomInOut {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
+    .right-section img:hover {
+      transform: scale(1.05);
     }
 
     .right-section h2 {
       color: #2c3e50;
-      font-size: 34px;
+      font-size: 20px;
       margin-bottom: 10px;
       text-align: center;
-      width: 100%;
     }
 
     .right-section p {
       color: #667885;
-      font-size: 28px;
+      font-size: 14px;
       text-align: center;
-      line-height: 1.6;
-      width: 100%;
+      line-height: 1.5;
     }
 
     .right-section span {
@@ -240,71 +252,47 @@
     .bottom-text {
       position: absolute;
       bottom: 0;
-      left: 53%;
+      left: 50%;
       color: gray;
       text-align: center;
-      font-size: 28px;
       transform: translateX(-50%);
       padding-bottom: 15px;
-      width: 100%;
     }
 
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
         width: 95%;
-        height: auto;
       }
 
       .left-section,
       .right-section {
         width: 100%;
-        padding: 30px;
-        align-items: center;
-        margin: 0;
-      }
-
-      .left-section h1,
-      .left-section p,
-      .sign-up-link {
-        text-align: center;
-      }
-
-      .form-options {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .forgot-password {
-        margin-left: 0;
-        margin-top: 10px;
+        padding: 20px;
       }
 
       .right-section img {
-        width: 220px;
-        height: auto;
-        margin-left: 0;
+        width: 200px;
       }
+    }
+    
+    ul li {
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
 
-      .right-section::before {
-        display: none;
-      }
+    ul li.error {
+      color: #c0392b;
+      background-color: #fceae9;
+      border: 1px solid #e74c3c;
+    }
 
-      .border-left {
-        border-left: none;
-        border-top: 1px solid #e0e0e0;
-      }
-
-      /* Adjust font sizes for smaller screens */
-      .left-section h1 { font-size: 36px; }
-      .left-section p { font-size: 20px; }
-      .form-group label { font-size: 22px; }
-      .form-group input { font-size: 20px; }
-      .remember-me label, .forgot-password, .sign-up-link { font-size: 18px; }
-      .sign-in-button { font-size: 24px; }
-      .right-section h2 { font-size: 30px; }
-      .right-section p { font-size: 24px; }
-      .bottom-text { font-size: 20px; } /* Adjusted for mobile */
+    ul li.success {
+      color: #27ae60;
+      background-color: #e6f4ea;
+      border: 1px solid #27ae60;
     }
   </style>
 </head>
@@ -312,34 +300,48 @@
   <div class="container">
     <div class="left-section">
       <h1 class="h1-text">WELCOME</h1>
+
       <p><em>Your journey to smarter engagement starts</em></p>
 
-      <div class="form-group">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email">
-      </div>
+      <!-- FORM START -->
+      <form method="post">
+        {% csrf_token %}
+         {% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password">
-      </div>
-
-      <div class="form-options">
-        <div class="remember-me">
-          <input type="checkbox" id="remember">
-          <label for="remember">Remember me</label>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" required>
         </div>
-        <a href="#" class="forgot-password">Forgot password</a>
-      </div>
 
-      <button class="sign-in-button">Sign in</button>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-options">
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label><br>
+          </div>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="sign-in-button">Sign in</button>
+      </form>
+      <!-- FORM END -->
 
       <div class="sign-up-link">
-        Don't have an account? <a href="{% url 'signup_page' %}">Sign up free!</a>
+        Don't have an account?<a href="{% url 'signup_page' %}">  Sign up!</a>
       </div>
     </div>
 
-    <div class="right-section border-left">
+    <div class="right-section">
       <img src="{% static 'ai.png' %}" alt="Engage.AI Robot">
       <h2>ENGAGE.AI</h2>
       <p>Smarter <span>Conversations</span> for Better <span>Leads</span></p>
@@ -351,3 +353,4 @@
   </div>
 </body>
 </html>
+
