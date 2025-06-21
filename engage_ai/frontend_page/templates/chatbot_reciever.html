@@ -25,7 +25,7 @@
     }
 
     .sidebar {
-      width: 300px;
+      width: 420px; /* Changed from 300px to 350px */
       background: #ffffff;
       border-right: 1px solid #ccc;
       display: flex;
@@ -83,7 +83,9 @@
         background-color: #e0e0e0;
     }
 
-    .bot-avatar {
+    /* Unified avatar size for bot and other users in message items */
+    .bot-avatar,
+    .message-item img { /* Added .message-item img to target other user avatars */
       width: 45px;
       height: 45px;
       border-radius: 50%;
@@ -98,8 +100,9 @@
       border-top: 1px solid #5e7a88;
     }
 
+    /* Updated styles for .home-btn and .logout-btn-link to work with <a> tags */
     .home-btn,
-    .logout-btn {
+    .logout-btn-link {
       background-color: #0f3e60;
       color: white;
       border: none;
@@ -108,12 +111,25 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
       font-size: 16px;
+      text-decoration: none; /* Remove underline from the link */
+      display: inline-flex; /* To align icon and text properly */
+      align-items: center;
+      gap: 5px; /* Space between icon and text */
     }
 
     .home-btn:hover,
-    .logout-btn:hover {
+    .logout-btn-link:hover {
       background-color: #06316e;
     }
+
+    /* Ensure the button itself doesn't have default styling if the link is inside */
+    .logout-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
 
     .chat-area {
       flex: 1;
@@ -210,28 +226,6 @@
       background: transparent;
     }
 
-    /* Attach file icon */
-    .clip {
-      font-size: 28px;
-      cursor: pointer;
-      color: #0f3e60;
-      background: linear-gradient(135deg, #6dd5fa, #2980b9);
-      padding: 8px 10px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(41, 128, 185, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .clip:hover {
-      transform: scale(1.2) rotate(10deg);
-      box-shadow: 0 8px 20px rgba(41, 128, 185, 0.7);
-      background: linear-gradient(135deg, #2980b9, #6dd5fa);
-    }
-
     /* Smile emoji */
     .emoji {
       font-size: 32px;
@@ -299,19 +293,19 @@
         <div class="messages">
           <h2>Messages</h2>
           <div class="message-item active" data-user-id="engage_ai">
-            <img src="{% static 'ai.jpg' %}" alt="Bot" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" alt="Bot" class="bot-avatar" />
             <div>
               <p><strong>Engage.AI</strong><br>Online</p>
             </div>
           </div>
           <div class="message-item" data-user-id="john_doe">
-            <img src="{% static 'default_avatar.jpg' %}" alt="John Doe" class="bot-avatar" />
+            <img src="{% static 'avtar3.jpg' %}" alt="John Doe" class="bot-avatar" />
             <div>
               <p><strong>John Doe</strong><br>Last message...</p>
             </div>
           </div>
           <div class="message-item" data-user-id="jane_smith">
-            <img src="{% static 'female_avatar.jpg' %}" alt="Jane Smith" class="bot-avatar" />
+            <img src="{% static 'avtar2.jpg' %}" alt="Jane Smith" class="bot-avatar" />
             <div>
               <p><strong>Jane Smith</strong><br>New updates</p>
             </div>
@@ -319,9 +313,9 @@
         </div>
       </div>
       <div class="sidebar-footer">
-        <button class="home-btn">🏠 Home</button>
+        <a href="{% url 'dashboard_page' %}" class="home-btn">🏠 Home</a>
         <button class="logout-btn">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          <a href="{% url 'login_page' %}" class="logout-btn-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
         </button>
       </div>
     </div>
@@ -329,7 +323,7 @@
     <div class="chat-area">
       <div class="chat-header">
         <div class="logo-area">
-          <img src="{% static 'ai.jpg' %}" class="bot-avatar" id="chat-header-avatar" />
+          <img src="{% static 'ai.png' %}" class="bot-avatar" id="chat-header-avatar" />
           <h2 id="chat-header-name">Engage.AI</h2>
         </div>
         <div class="chat-actions">
@@ -343,7 +337,7 @@
         <div class="chat-messages-engage_ai">
           <div class="date-separator">Today</div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               Hi Pooja, How can I help you today.
               <div class="timestamp">3:17 PM</div>
@@ -357,7 +351,7 @@
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               I understand. Please confirm if you want to filter this by any specific region or customer segment.
               <div class="timestamp">3:19 PM</div>
@@ -371,14 +365,14 @@
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               Okay, fetching the data for you. This might take a moment.
               <div class="timestamp">3:21 PM</div>
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               There are 12,543 customers with car insurance policies expiring in the next 30 days.
               <div class="timestamp">3:22 PM</div>
@@ -392,7 +386,7 @@
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               You're welcome! Is there anything else I can assist you with today?
               <div class="timestamp">3:24 PM</div>
@@ -402,11 +396,10 @@
             <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
             <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
               Not at the moment. Thanks!
-              <div class="timestamp">3:25 PM</div>
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               Is there anything else I can assist you with, Pooja?
               <div class="timestamp">3:26 PM</div>
@@ -416,11 +409,10 @@
             <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
             <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
               Could you summarize the last three campaigns?
-              <div class="timestamp">3:27 PM</div>
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
               Certainly! Campaign A focused on new customer acquisition, Campaign B on retention, and Campaign C on product upsells.
               <div class="timestamp">3:28 PM</div>
@@ -430,13 +422,12 @@
             <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
             <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
               Thanks for the quick overview!
-              <div class="timestamp">3:29 PM</div>
             </div>
           </div>
           <div class="chat-message bot-message">
-            <img src="{% static 'ai.jpg' %}" class="bot-avatar" />
+            <img src="{% static 'ai.png' %}" class="bot-avatar" />
             <div class="message-content">
-              Anytime, Pooja!
+              Antyime, Pooja!
               <div class="timestamp">3:30 PM</div>
             </div>
           </div>
@@ -445,7 +436,7 @@
         <div class="chat-messages-john_doe" style="display: none;">
             <div class="date-separator">Yesterday</div>
             <div class="chat-message bot-message">
-                <img src="{% static 'default_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Hi Pooja, regarding the Q3 sales report...
                     <div class="timestamp">10:00 AM</div>
@@ -459,7 +450,7 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'default_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Great! I've attached the detailed breakdown. Let me know if you have any questions.
                     <div class="timestamp">10:10 AM</div>
@@ -473,7 +464,7 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'default_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     The marketing team is particularly interested in the regional performance.
                     <div class="timestamp">10:20 AM</div>
@@ -486,8 +477,8 @@
                     <div class="timestamp">10:25 AM</div>
                 </div>
             </div>
-             <div class="chat-message bot-message">
-                <img src="{% static 'default_avatar.jpg' %}" class="bot-avatar" />
+              <div class="chat-message bot-message">
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Thanks, Pooja. Your insights are always valuable.
                     <div class="timestamp">10:30 AM</div>
@@ -501,14 +492,14 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'default_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Any updates on the client meeting next week?
                     <div class="timestamp">10:40 AM</div>
                 </div>
             </div>
             <div class="chat-message user-message">
-                <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
                     It's confirmed for Tuesday.
                     <div class="timestamp">10:45 AM</div>
@@ -519,7 +510,7 @@
         <div class="chat-messages-jane_smith" style="display: none;">
             <div class="date-separator">5 June 2025</div>
             <div class="chat-message bot-message">
-                <img src="{% static 'female_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Pooja, do you have the latest updates on the marketing campaign?
                     <div class="timestamp">2:00 PM</div>
@@ -533,7 +524,7 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'female_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Great, thanks! We're planning the next phase.
                     <div class="timestamp">2:10 PM</div>
@@ -547,7 +538,7 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'female_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Excellent! Let's schedule a quick call to discuss them.
                     <div class="timestamp">2:20 PM</div>
@@ -561,28 +552,28 @@
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'female_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Perfect, I'll send an invite.
                     <div class="timestamp">2:30 PM</div>
                 </div>
             </div>
-             <div class="chat-message user-message">
-                <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
+              <div class="chat-message user-message">
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
                     Looking forward to it!
                     <div class="timestamp">2:35 PM</div>
                 </div>
             </div>
             <div class="chat-message bot-message">
-                <img src="{% static 'female_avatar.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content">
                     Me too!
                     <div class="timestamp">2:40 PM</div>
                 </div>
             </div>
             <div class="chat-message user-message">
-                <img src="{% static 'avtar1.jpg' %}" class="bot-avatar" />
+                <img src="{% static 'ai.png' %}" class="bot-avatar" />
                 <div class="message-content" style="background: #dcf8c6; margin-left: auto; margin-right: 12px;">
                     Have a great day!
                     <div class="timestamp">2:45 PM</div>
@@ -592,7 +583,6 @@
       </div>
 
       <div class="chat-input">
-        <span class="clip" title="Attach file">📎</span>
         <input type="text" value="Count of customer with car insurance expiry in 30 days" readonly />
         <span class="emoji" title="Smile emoji">😊</span>
         <span class="send" title="Send"><i class="fa-solid fa-paper-plane"></i></span>
@@ -606,19 +596,19 @@
       'engage_ai': {
         name: 'Engage.AI',
         handle: 'Online',
-        avatar: "{% static 'ai.jpg' %}",
+        avatar: "{% static 'ai.png' %}",
         chatContentSelector: '.chat-messages-engage_ai' // Selector for specific chat messages
       },
       'john_doe': {
         name: 'John Doe',
         handle: '@JohnDoe',
-        avatar: "{% static 'default_avatar.jpg' %}", // Make sure you have this image
+        avatar: "{% static 'avtar3.jpg' %}", // Make sure you have this image
         chatContentSelector: '.chat-messages-john_doe'
       },
       'jane_smith': {
         name: 'Jane Smith',
         handle: '@JaneS',
-        avatar: "{% static 'female_avatar.jpg' %}", // Make sure you have this image
+        avatar: "{% static 'avtar2.jpg' %}", // Make sure you have this image
         chatContentSelector: '.chat-messages-jane_smith'
       }
     };

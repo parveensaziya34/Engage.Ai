@@ -9,70 +9,102 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: url("{% static 'image.jpg' %}") no-repeat center center fixed; /* Re-added background image */
             background-size: cover;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        .header-image-banner {
-            background: url("{% static 'full_width_header.png' %}") no-repeat center center;
-            background-size: cover;
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            padding: 0 40px;
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
+       .header-image-banner {
+    /* Image properties */
 
-        .header-text-content {
-            text-align: left;
-            margin-right: auto;
-        }
+    background-size: cover;
+    width: 100%;
+    min-height: 200px; /* Use min-height for better responsiveness */
+    position: relative; /* Needed for overlay */
+    overflow: hidden; /* Ensures image doesn't bleed out */
+    background-color: #2c3e50;
 
-        .header-text-content h1 {
-            font-size: 46px;
-            color: #191d1e;
-            margin: 0;
-            white-space: nowrap;
-        }
+    /* Flexbox for content alignment */
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+    flex-shrink: 0;
 
-        .header-text-content p {
-            font-size: 28px;
-            color: #717471;
-            margin-top: 5px;
-            white-space: nowrap;
-        }
+    /* Applied the dark blue color from your menu bar with transparency */
+    /* background-color: rgba(44, 62, 80, 0.7); Dark blue from menu-bar, 70% opacity */
+    background-blend-mode: multiply; /* Blends the background image with the solid color */
+}
 
-        .header-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #FFC0CB;
-            flex-shrink: 0;
-            margin-left: 20px;
-        }
+.header-image-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Subtle white overlay for general lightness, combined with backdrop-filter */
+    background-color: rgba(255, 255, 255, 0.05); /* Very light white overlay (5% transparency) */
+    /* Adjusts brightness and adds a slight grayscale to the image behind the overlay */
+    backdrop-filter: brightness(1.05) grayscale(0.1);
+    z-index: 1; /* Ensures overlay is above the image but below content */
+}
+
+/* Add this if you have content within the banner */
+.header-image-banner > * {
+    position: relative; /* Ensures content is above the overlay */
+    z-index: 2;
+    color: #f8f8f8; /* Lighter text color for better contrast on darker background */
+}
+
+.header-text-content {
+    text-align: left;
+    margin-right: auto;
+}
+
+.header-text-content h1 {
+    font-size: 46px; /* Adjust font size as per image */
+    color: #ffffff; /* Changed to white for better contrast on dark banner */
+    margin: 0;
+    white-space: nowrap;
+}
+
+.header-text-content p {
+    font-size: 28px; /* Adjust font size as per image */
+    color: #e0e0e0; /* Changed to off-white for better contrast */
+    margin-top: 5px;
+    white-space: nowrap;
+}
+
+.header-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* border: 3px solid #FFC0CB; Pink border */
+    flex-shrink: 0;
+    margin-left: 20px;
+    /* Add a subtle border to the avatar that complements the new header color */
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
 
         .content-area-wrapper {
             display: flex;
             flex-grow: 1;
             width: 100%;
-            padding-top: 30px;
+            padding-top: 0;
             box-sizing: border-box;
         }
 
         .left-panel {
             display: flex;
             flex-direction: row;
-            flex-shrink: 0; /* THIS IS THE KEY CHANGE for the sidebar width issue */
+            flex-shrink: 0;
         }
 
         .menu-bar {
-            width: 200px;
+            width: 350px; /* Increased width for the menu bar */
             background-color: #2c3e50;
             color: white;
             padding: 20px 10px;
@@ -82,47 +114,72 @@
             gap: 12px;
             font-size: 18px;
             height: auto;
-            margin-bottom: 0;
             box-sizing: border-box;
-            margin-top: 50px;
+            margin-top: 0;
             padding-bottom: 20px;
             flex-grow: 1;
         }
 
-        .menu-bar button {
+        /* Styling for both buttons and links in the menu bar */
+        .menu-bar button,
+        .menu-bar a {
             background-color: #34495e;
             color: white;
             border: none;
             padding: 14px 18px;
-            font-size: 16px;
+            font-size: 20px;
             border-radius: 6px;
             text-align: left;
             transition: background-color 0.2s ease;
             cursor: pointer;
+            display: flex; /* Added for icon alignment */
+            align-items: center; /* Added for icon alignment */
+            gap: 8px; /* Space between icon and text */
+            text-decoration: none; /* Remove underline for links */
         }
 
-        .menu-bar button:hover {
+        .menu-bar button:hover,
+        .menu-bar a:hover {
             background-color: #036d8d;
         }
 
         .menu-bar .bottom-buttons {
             margin-top: auto;
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Changed to row for horizontal layout */
+            justify-content: space-between; /* Changed to space-between to push buttons to ends */
             gap: 12px;
             padding-top: 20px;
         }
 
-        .menu-bar .logout-btn {
-            background-color: #dc3545;
+        .menu-bar .logout-btn,
+        .menu-bar .home-btn { /* Added .home-btn */
+            background-color: #dc3545; /* Red color for both */
+            flex-grow: 1; /* Allow buttons to take available space */
+            justify-content: center; /* Center content within button */
         }
 
-        .menu-bar .logout-btn:hover {
+        /* Specific styling for the 'Home' and 'Logout' links */
+        .menu-bar .home-link,
+        .menu-bar .logout-link {
+            background-color: #dc3545; /* Red color for both */
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .menu-bar .logout-btn:hover,
+        .menu-bar .home-btn:hover,
+        .menu-bar .home-link:hover,
+        .menu-bar .logout-link:hover {
             background-color: #c82333;
         }
 
-       .sidebar {
-            width: 700px; /* Increased sidebar width to 700px */
+        .menu-bar .icon {
+            font-size: 22px; /* Increased font size for icons */
+        }
+
+        .sidebar {
+            width: 500px; /* Sidebar width remains 500px as per previous request */
             background-color: white;
             padding: 45px 30px;
             display: flex;
@@ -130,8 +187,8 @@
             align-items: center;
             height: auto;
             box-sizing: border-box;
-            margin-top: 55px;
-            min-height: calc(100% - 50px);
+            margin-top: 0;
+            min-height: calc(100vh - 200px); /* Adjust min-height to account for header */
             flex-shrink: 0;
             position: relative;
             z-index: 1;
@@ -140,8 +197,8 @@
         .sidebar::after {
             content: '';
             position: absolute;
-            top: 160px;
-            bottom: 80px;
+            top: 0;
+            bottom: 0;
             right: 0;
             width: 2px;
             background-color: #ccc;
@@ -150,72 +207,70 @@
         .label {
             font-weight: bold;
             margin-top: 0px;
-            margin-bottom: 10px; /* Space below the label */
+            margin-bottom: 10px;
             font-size: 18px;
-            width: 80%; /* Ensure label takes same percentage width as .select-container */
-            max-width: 350px; /* Ensure label adheres to the same max-width as .select-container */
-            text-align: left; /* Keep text aligned to the left */
+            width: 80%;
+            max-width: 350px;
+            text-align: left;
         }
 
-        /* NEW: Container for both input and dropdown list */
         .select-container {
-            position: relative; /* Crucial for positioning the dropdown list */
-            width: 80%; /* Control the overall width of the component */
-            max-width: 350px; /* Max width for the entire select component */
-            margin-bottom: 30px; /* Space below the entire component */
+            position: relative;
+            width: 80%;
+            max-width: 350px;
+            margin-bottom: 30px;
         }
 
-        /* NEW: Wrapper for the input and dropdown icon to act as one visual unit */
         .input-with-icon-wrapper {
-            display: flex; /* Makes input and icon align */
-            align-items: center; /* Vertically centers them */
-            border: 1px solid #ccc; /* Unified border for the box */
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
             border-radius: 8px;
             background-color: white;
-            width: 100%; /* Takes full width of .select-container */
-            box-sizing: border-box; /* Ensures padding/border are included in width */
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .input-with-icon-wrapper input {
-            flex-grow: 1; /* Input takes up available space */
+            flex-grow: 1;
             padding: 14px 16px;
             font-size: 18px;
-            border: none; /* No individual border for input */
-            background-color: transparent; /* Transparent background to show parent's background */
-            outline: none; /* Remove focus outline */
-            border-radius: 8px 0 0 8px; /* Rounded corners only on the left side of input */
+            border: none;
+            background-color: transparent;
+            outline: none;
+            border-radius: 8px 0 0 88px;
         }
 
         .dropdown-icon {
-            flex-shrink: 0; /* Prevents icon from shrinking */
-            padding: 14px 16px; /* Matches input padding for height/alignment */
-            background-color: #666; /* Your desired icon background color */
-            color: white; /* Icon color */
-            border-radius: 0 8px 8px 0; /* Rounded corners only on the right side of the icon */
+            flex-shrink: 0;
+            padding: 14px 16px;
+            background-color: #666;
+            color: white;
+            border-radius: 0 8px 8px 0;
             cursor: pointer;
-            font-size: 1.2em; /* Adjust size of the arrow */
-            display: flex; /* For vertical centering of the arrow */
+            font-size: 1.2em;
+            display: flex;
             align-items: center;
             justify-content: center;
             transition: background-color 0.2s ease;
         }
 
         .dropdown-icon:hover {
-            background-color: #036d8d; /* Hover effect for the icon */
+            background-color: #036d8d;
         }
 
         .dropdown-list {
-            position: absolute; /* Positioned relative to .select-container */
-            top: 100%; /* Places it directly below the input-with-icon-wrapper */
+            position: absolute;
+            top: 100%;
             left: 0;
-            width: 100%; /* Matches width of .select-container */
+            width: 100%;
             background: white;
-            display: none; /* Hidden by default */
+            display: none;
             z-index: 10;
             max-height: 200px;
             overflow-y: auto;
             border: 1px solid #ccc;
-            border-top: none; /* Optical trick to make it look connected */
+            border-top: none;
             border-radius: 0 0 8px 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -284,7 +339,7 @@
             flex-grow: 1;
             background-color: rgba(255, 255, 255, 0.95);
             overflow-y: auto;
-            padding: 30px 30px 30px 50px; /* Increased left padding for separation from the line */
+            padding: 30px 30px 30px 50px;
             box-sizing: border-box;
         }
 
@@ -314,9 +369,19 @@
         }
 
         .access-section .column:first-child {
-            border-right: 2px solid #ccc;
             padding-right: 40px;
-            margin-right: 10px;
+            position: relative;
+        }
+
+        .access-section .column:first-child::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: -130px;
+            width: 2px;
+            background-color: #ccc;
+            z-index: 2;
         }
 
         .column {
@@ -344,7 +409,7 @@
         }
 
         .action-buttons {
-            margin-top: 5px;
+            margin-top: 40px;
             display: flex;
             justify-content: center;
             gap: 300px;
@@ -390,7 +455,7 @@
             text-align: center;
             width: 400px;
             max-width: 90%;
-            position: relative; /* For closing button */
+            position: relative;
         }
 
         .modal-box h2 {
@@ -421,7 +486,7 @@
 <body>
     <div class="header-image-banner">
         <div class="header-text-content">
-            <h1>Good Morning, Priyanka! Welcome Back!</h1>
+            <h1>Welcome Back! Priyanka</h1>
             <p>Smart Connections: Respecting Preferences, Building Trust</p>
         </div>
         <img src="{% static 'avtar1.jpg' %}" alt="Priyanka Avatar" class="header-avatar" />
@@ -432,15 +497,15 @@
             <aside class="menu-bar">
                 <button onclick="showModal()">Generate Leads</button>
                 <button onclick="showModal()">Approve Campaigns</button>
-                <button onclick="showModal()">Contact Policy (Admin)</button>
-                <button onclick="showModal()">Access Matrix (Admin)</button>
+                <a href="{% url 'control_page' %}">Contact Policy (Admin)</a>
+                <a href="{% url 'access_page' %}">Access Matrix (Admin)</a>
                 <button onclick="showModal()">Reports Hub</button>
-                <button onclick="showModal()">Campaign Calendar</button>
+                <a href="{% url 'calender_page' %}">Campaign Calendar</a>
                 <button onclick="showModal()">Help Book</button>
 
                 <div class="bottom-buttons">
-                    <button onclick="alert('Navigating to Home!')">Home</button>
-                    <button class="logout-btn" onclick="alert('Logged out!')">Logout</button>
+                    <a href="{% url 'dashboard_page' %}" class="home-link"><span class="icon">🏠</span> Home</a>
+                    <a href="{% url 'login_page' %}" class="logout-link"><span class="icon">&#x2B05;</span> Logout</a>
                 </div>
             </aside>
 
@@ -448,7 +513,7 @@
                 <label for="user-name" class="label">Select User(s)</label>
                 <div class="select-container">
                     <div class="input-with-icon-wrapper">
-                        <input type="text" id="user-name" value="Aliya Khan" readonly />
+                        <input type="text" id="user-name" value="Shruti singh" readonly />
                         <span class="dropdown-icon" onclick="toggleDropdown()">▼</span>
                     </div>
                     <div id="dropdown" class="dropdown-list"></div>
@@ -533,23 +598,7 @@
             }
         });
 
-        const users = [
-            {
-                name: "Pooja ",
-                email: "PoojaM@client.com",
-                avatar: "{% static 'avtar1.jpg' %}"
-            },
-            {
-                name: "Rahul Verma",
-                email: "rahul.v@client.com",
-                avatar: "{% static 'avtar2.jpg' %}"
-            },
-            {
-                name: "Anjali Gupta",
-                email: "anjali.g@client.com",
-                avatar: "{% static 'avtar2.jpg'}"
-            }
-        ];
+        const users = [         {           name: "Pooja ",           email: "PoojaM@client.com",           avatar: "{% static 'avtar1.jpg' %}"         },          {           name: "Rahul Verma",           email: "rahul.v@client.com",           avatar: "{% static 'avtar2.jpg' %}"         },          {           name: "Anjali Gupta",           email: "anjali.g@client.com",           avatar: "{% static 'avtar2.jpg'}"         }         ];
 
         const dropdown = document.getElementById("dropdown");
 
@@ -586,7 +635,6 @@
                 dropdown.style.display = "none";
             }
         });
-
     </script>
 </body>
 </html>

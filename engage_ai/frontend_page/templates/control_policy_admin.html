@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Contact Policy</title>
     {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
         :root {
-            --primary-color: #046bb0; /* A vibrant blue for accents */
-            --secondary-color: #2ecc71; /* A green for success/update */
+            --primary-color: #046bb0;
+            --secondary-color: #2ecc71;
             --dark-text: #2c3e50;
             --medium-text: #778181;
             --light-bg: #f9fbfd;
             --card-bg: #ffffff;
             --border-color: #e0e0e0;
             --shadow: rgba(0, 0, 0, 0.08);
-            --sidebar-bg: #34495e; /* Darker blue-grey for sidebar */
-            --sidebar-item-hover: #4e637a; /* Slightly lighter on hover */
+            --sidebar-bg: #2c3e50;
+            --sidebar-item-hover: #1c5a94;
             --navbar-bg: #ffffff;
             --logout-red: #e74c3c;
-            --home-blue: #e74c3c; /* A moderate blue for the home button */
         }
 
         * {
@@ -34,199 +34,171 @@
             width: 100%;
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            overflow: hidden; /* Prevent overall scrollbar unless content demands it */
-        }
-
-        body {
-            background: linear-gradient(to right, #f0f2f5, #e0e6ec); /* Subtle gradient background */
-            color: var(--dark-text);
-            display: flex;
-            flex-direction: column; /* Main layout is column now: navbar, then content */
-        }
-
-        /* --- Navbar Styles --- */
-        .navbar {
-            background-color: var(--navbar-bg);
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000; /* Ensure navbar is always on top */
-            height: 80px; /* Fixed height for navbar */
-        }
-
-        .navbar-left h2 {
-            font-size: clamp(20px, 2.5vw, 28px);
-            color: var(--dark-text);
-            font-weight: 600;
-        }
-
-        .navbar-left p {
-            font-size: clamp(12px, 1.5vw, 16px);
-            color: var(--medium-text);
-        }
-
-        .navbar-right img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .navbar-right img:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- Main Layout: Sidebar and Content --- */
-        .dashboard-layout {
-            display: flex;
-            flex: 1; /* Take remaining vertical space */
-            width: 100%;
-            overflow: hidden; /* Hide scrollbars on this container */
-        }
-
-        /* --- Sidebar Styles --- */
-        .sidebar {
-            width: 320px; /* Increased sidebar width */
-            background-color: var(--sidebar-bg);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            flex-shrink: 0; /* Prevent sidebar from shrinking */
-            overflow-y: auto; /* Allow sidebar to scroll if items overflow */
+            background-color: #f4f6f8;
         }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            flex-grow: 1; /* Allow the ul to take available space */
+        header {
+            background-size: cover;
+            width: 100%;
+            height: 180px;
+            display: flex;            /* background: url("{% static 'image header.png' %}") no-repeat center center; */
+            background-color: #2c3e50;
+            
+            align-items: center;
+            padding: 0 30px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            justify-content: space-between;
+            /* background-color: rgba(255, 255, 255, 0.5); White overlay with 50% transparency */
+            /* background-blend-mode: lighten; Blend mode to lighten the background image */
         }
 
-        .sidebar ul li {
-            margin-bottom: 10px; /* Increased margin for separation between boxes */
-            padding: 0 20px; /* Add horizontal padding to center the box */
+        .welcome {
+            text-align: left;
+            margin-right: auto;
         }
 
-        .sidebar ul li a {
-            display: block;
-            padding: 15px 25px;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 400;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
-            border-radius: 8px; /* Rounded corners for the boxes */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for the box */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-            text-align: center; /* Center the text inside the box */
+        .welcome h1 {
+            font-size: 42px;
+            color: white; /* Ensure text on the gradient is readable */
+            margin-right: 90px;
+            white-space: nowrap;
         }
 
-        .sidebar ul li a:hover {
-            background-color: var(--sidebar-item-hover);
-            transform: translateY(-3px); /* Lift effect on hover */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        .welcome p {
+            font-size: 24px;
+            color: white; /* Ensure text on the gradient is readable */
+            margin-top: 5px;
+            white-space: nowrap;
         }
 
-        .sidebar ul li a.active {
-            background-color: var(--primary-color);
-            border-color: var(--secondary-color); /* Highlight active item */
-            font-weight: 600;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        .user-profile img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            margin-left: 20px;
         }
 
-
-        /* Container for Home and Logout buttons */
-        .sidebar-buttons {
+        .dashboard-layout {
             display: flex;
-            justify-content: center; /* Center buttons horizontally */
-            gap: 10px; /* Space between buttons */
-            padding: 20px 25px; /* Padding similar to list items */
-            margin-top: auto; /* Push buttons to the bottom */
+            flex-grow: 1;
+            width: 100%;
+            padding-top: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
-        /* --- Logout Button in Sidebar --- */
-        .sidebar .logout-btn {
-            background-color: var(--logout-red);
+        .sidebar {
+            width: 390px;
+            background-color: #2c3e50;
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-align: center; /* Center the text within the button */
-            flex-grow: 1; /* Allow button to grow */
-            max-width: 120px; /* Max width for button */
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            font-size: 17px;
+            height: auto;
+            box-sizing: border-box;
+            margin-top: 0;
+            padding-bottom: 15px;
+            flex-shrink: 0;
         }
 
-        .sidebar .logout-btn:hover {
-            background-color: #c0392b;
-            transform: translateY(-3px);
-        }
-
-        /* --- Home Button in Sidebar --- */
-        .sidebar .home-btn {
-            background-color: var(--home-blue);
+        .sidebar button,
+        .sidebar-link {
+            background-color: #34495e;
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: 600;
+            border: none;
+            padding: 12px 15px;
+            font-size: clamp(17px, 1.2vw, 20px);
+            border-radius: 6px;
+            text-align: left;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-align: center;
-            flex-grow: 1; /* Allow button to grow */
-            max-width: 120px; /* Max width for button */
         }
 
-        .sidebar .home-btn:hover {
-            background-color: #9a2b09;
-            transform: translateY(-3px);
+        .sidebar button:hover,
+        .sidebar-link:hover {
+            background-color: #036d8d;
+        }
+
+        .bottom-sidebar-buttons {
+            margin-top: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 5px;
+            padding-top: 15px;
+        }
+
+        .sidebar-home,
+        .sidebar-logout {
+            background-color: #dc3545;
+            flex-grow: 2;
+            justify-content: center;
+            color: white;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: clamp(1rem, 1vw, 1.1rem);
+            padding: 5px 8px;
+        }
+            
+        .sidebar-home:hover,
+        .sidebar-logout:hover {
+            background-color: #c82333;
+        }
+
+        .sidebar .icon {
+            font-size: clamp(17px, 1.2vw, 22px);
+        }
+        .sidebar-logout .fas {
+            font-size: clamp(17px, 1.2vw, 22px);
         }
 
         /* --- Main Content Area Styles --- */
         .main-content {
-            flex: 1; /* Take remaining horizontal space */
-            padding: 15px; /* Reduced padding from 20px to 15px */
-            overflow-y: auto; /* Allow content to scroll */
-            position: relative; /* For logout button positioning */
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         /* Adjusted container to fit within main-content */
         .container {
             background: var(--card-bg);
             width: 100%;
-            max-width: 1700px;
-            border-radius: 15px;
-            padding: 30px 50px;
-            box-shadow: 0 10px 30px var(--shadow);
+            max-width: calc(100% - 20px);
+            border-radius: 12px;
+            padding: 25px 40px;
+            box-shadow: 0 8px 25px var(--shadow);
             animation: fadeIn 0.8s ease-out;
-            margin: 0 auto; /* Changed from margin: auto; to margin: 0 auto; to remove top/bottom margin and keep horizontal centering */
-            min-height: calc(100vh - 80px - 30px); /* Adjusted min-height: (40px padding reduced to 30px to compensate for reduced main-content padding) */
+            margin: 0 auto;
+            min-height: calc(100vh - 180px - 20px);
             display: flex;
             flex-direction: column;
         }
 
-        /* Ensure contact policy container content is centered horizontally when appropriate */
-        .container > header,
+        .container > .page-header,
         .container > .subtext,
         .container > .buttons {
             align-self: center;
         }
 
         .container > .main-grid {
-            flex-grow: 1; /* Allow the grid to take available space */
+            flex-grow: 1;
         }
 
         @keyframes fadeIn {
@@ -234,395 +206,506 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        header {
+        .page-header {
             display: flex;
-            justify-content: center; /* Changed to center content after removing logos */
+            justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
         }
 
         h1 {
             text-align: center;
-            font-size: clamp(28px, 5vw, 42px);
+            font-size: clamp(26px, 4.5vw, 38px);
             color: var(--primary-color);
             font-weight: 700;
         }
 
         .subtext {
             text-align: center;
-            margin: 10px 0 40px;
-            font-size: clamp(16px, 2.5vw, 20px);
+            margin: 8px 0 30px;
+            font-size: clamp(15px, 2.3vw, 18px);
             color: var(--medium-text);
             font-weight: 400;
+        }
+
+        .container .subtext {
+            font-size: clamp(13px, 1.8vw, 16px);
         }
 
         .main-grid {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Center items when they wrap */
-            gap: 50px;
+            justify-content: center;
+            gap: 20px;
         }
 
         .left-section {
             flex: 2;
-            min-width: 300px; 
+            min-width: 280px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
         }
 
-        .message-block {
-            background-color: var(--light-bg);
-            border-radius: 10px;
-            padding: 15px 20px;
+        .policy-row {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            font-size: clamp(15px, 2vw, 19px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            gap: 8px;
+            font-size: clamp(14px, 1.8vw, 17px);
+            padding: 6px 0;
             transition: transform 0.2s ease-in-out;
         }
 
-        .message-block:hover {
-            transform: translateY(-5px);
+        .policy-row:hover {
+            transform: translateY(-2px);
         }
 
-        .message-block img {
-            width: 40px;
-            height: 40px;
+        .policy-row img {
+            width: 35px;
+            height: 35px;
             object-fit: contain;
-            margin-right: 5px;
+            flex-shrink: 0;
         }
 
-        .message-block span {
+        .policy-row > span:first-of-type {
             font-weight: 500;
             color: var(--dark-text);
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 90px;
+            text-align: left;
+            margin-right: 8px;
         }
 
-        .message-block input[type="number"],
-        .message-block select {
-            padding: 10px 12px;
+        .policy-row > span:last-of-type {
+            font-weight: 500;
+            color: var(--dark-text);
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 140px;
+            text-align: left;
+            margin-right: 15px; /* Default margin for all last spans */
+        }
+        
+        /* New rule for 'Marketing PN' spans to adjust their margin */
+        .policy-row .marketing-pn-text,marketing-wn-text {
+            margin-right: 10px; /* Adjust this value as needed */
+        }
+
+        .policy-row input[type="number"],
+        .policy-row select {
+            padding: 8px 10px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: clamp(15px, 1.6vw, 17px);
-            width: 90px;
-            text-align: center;
+            border-radius: 6px;
+            font-size: clamp(14px, 1.5vw, 16px);
             background-color: var(--card-bg);
             color: var(--dark-text);
-            appearance: none; /* Remove default arrow on select */
+            appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
             cursor: pointer;
+            margin-right: 20px;
+            flex-shrink: 0;
         }
-
-        .message-block select {
-            padding-right: 80px; /* Make room for custom arrow if desired */
-            width: 170px; /* Increased width for per day/per week dropdown */
-            margin-right: 100px;
-            column-gap: 10px;
+            
+        .policy-row input[type="number"] {
+            width: 70px;
+            text-align: center;
+            margin-right: 15px;
         }
-
-
-        .offset {
-            margin-left: 60px; /* Adjust based on icon size and gap */
+            
+        .policy-row select {
+            width: 110px;
+            margin-right: 50px;
         }
 
         .right-section {
             flex: 1;
-            min-width: 280px;
-            background: linear-gradient(to bottom right, #eaf4f7, #d7e9f0); /* Soft gradient for right section */
-            border-radius: 15px;
-            padding: 30px;
+            min-width: 250px;
+            background: linear-gradient(to bottom right, #eaf4f7, #d7e9f0);
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
-            font-size: clamp(15px, 1.8vw, 18px);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.03);
+            font-size: clamp(14px, 1.6vw, 17px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        .right-section h3 {
-            font-size: clamp(20px, 2.5vw, 26px);
+        .outgoing-message-box {
+            background-color: var(--card-bg);
+            padding: 10px 12px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .outgoing-message-box h3 {
+            font-size: clamp(18px, 2.2vw, 24px);
+            margin-bottom: 0;
             color: var(--primary-color);
             font-weight: 600;
+            line-height: 1.2;
         }
 
         .right-section p {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--medium-text);
         }
 
         .right-section label {
             font-weight: 500;
-            margin-right: 10px;
+            margin-right: 8px;
             color: var(--dark-text);
         }
 
         .right-section input[type="time"] {
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
-            margin-top: 10px;
-            font-size: clamp(16px, 1.8vw, 19px);
+            margin-top: 8px;
+            font-size: clamp(15px, 1.6vw, 18px);
             background-color: var(--card-bg);
             color: var(--dark-text);
             cursor: pointer;
+            width: 80%;
+            max-width: 180px;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-top: 50px;
+            gap: 70px;
+            margin-top: 40px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 14px 35px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 30px;
-            font-size: clamp(16px, 2vw, 20px);
+            border-radius: 25px;
+            font-size: clamp(15px, 1.8vw, 18px);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             letter-spacing: 0.5px;
         }
 
-        .btn.update {
+        .btn.update ,
+        .btn.reset,
+        .btn.back {
             background-color: #5f6767;
             color: white;
         }
-
-        .btn.update:hover {
-            background-color: #086191;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .btn.reset,
-        .btn.back {
-            background-color: #5f6767; /* Softer grey */
-            color: white;
-        }
-
+            
+        .btn.update:hover,
         .btn.reset:hover,
         .btn.back:hover {
             background-color: #086191;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            max-width: 350px;
+            width: 90%;
+        }
+
+        .modal-box h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .modal-box p {
+            color: #535858;
+            line-height: 1.5;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close-btn:hover {
+            color: #333;
         }
 
         /* --- Responsive Design --- */
         @media (max-width: 1024px) {
-            .sidebar {
-                width: 250px; /* Adjusted width for tablets */
+            header { padding: 15px 25px; height: 160px; }
+            .welcome h1 { font-size: 34px; }
+            .welcome p { font-size: 18px; }
+            .user-profile img { width: 55px; height: 55px; }
+
+            .sidebar { width: 320px; padding: 12px 8px; gap: 8px; }
+            .sidebar button, .sidebar-link { padding: 10px 12px; font-size: clamp(16px, 1.8vw, 18px); }
+            .sidebar .icon { font-size: clamp(20px, 2.2vw, 22px); }
+            .sidebar-logout .fas { font-size: clamp(20px, 2.2vw, 22px); }
+            .bottom-sidebar-buttons { padding-top: 12px; }
+            .sidebar-home, .sidebar-logout { font-size: clamp(0.9rem, 1.2vw, 1rem); padding: 8px 12px; }
+
+            .main-content { padding: 8px; }
+            .container { padding: 20px 30px; max-width: calc(100% - 16px); }
+            .page-header { margin-bottom: 20px; padding-bottom: 12px; }
+            h1 { font-size: clamp(24px, 4vw, 34px); }
+            .subtext { margin: 6px 0 25px; font-size: clamp(14px, 2.2vw, 17px); }
+            .container .subtext { font-size: clamp(12px, 1.7vw, 15px); }
+
+            .main-grid { gap: 15px; }
+            .left-section { min-width: 260px; gap: 15px; }
+            .policy-row { font-size: clamp(13px, 1.7vw, 16px); padding: 5px 0; gap: 6px; }
+            .policy-row img { width: 30px; height: 30px; }
+            .policy-row > span:first-of-type { min-width: 80px; margin-right: 8px; }
+            .policy-row > span:last-of-type { min-width: 120px; margin-right: 10px; } /* Adjusted for smaller screens */
+            .policy-row .marketing-pn-text {
+                margin-right: 7px; /* Adjusted for smaller screens */
             }
+            .policy-row input[type="number"] { padding: 7px 9px; width: 65px; margin-right: 90px; }
+            .policy-row select { padding: 7px 9px; width: 100px;  margin-right: 10px;}
+
+            .right-section { min-width: 230px; padding: 20px; font-size: clamp(13px, 1.5vw, 16px); }
+            .outgoing-message-box { padding: 8px 10px; margin-bottom: 12px; }
+            .outgoing-message-box h3 { font-size: clamp(17px, 2vw, 22px); }
+            .right-section p { margin-bottom: 12px; }
+            .right-section label { margin-right: 6px; }
+            .right-section input[type="time"] { padding: 7px 10px; margin-top: 6px; font-size: clamp(14px, 1.7vw, 17px); max-width: 160px; }
+            
+            .buttons { gap: 15px; margin-top: 30px; }
+            .btn { padding: 10px 25px; font-size: clamp(14px, 1.8vw, 17px); }
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-                height: auto;
-                gap: 10px;
+            body { flex-direction: column; overflow-y: auto; }
+            header { padding: 10px; flex-direction: column; text-align: center; height: auto; }
+            .welcome { margin-bottom: 8px; }
+            .welcome h1 { font-size: 26px; }
+            .welcome p { font-size: 15px; }
+            .user-profile img { width: 45px; height: 45px; margin-left: 0; }
+
+            .dashboard-layout { flex-direction: column; overflow: visible; }
+            .sidebar { 
+                width: 100%; 
+                flex-direction: row; 
+                flex-wrap: wrap; 
+                justify-content: space-around; 
+                padding: 8px; 
+                position: static; 
+                height: auto; 
+                min-height: auto; 
+                border-radius: 0; 
+                box-shadow: none; 
+                order: 2; 
             }
-            .dashboard-layout {
-                flex-direction: column; /* Stack sidebar and content on small screens */
+            .sidebar button, .sidebar-link { 
+                font-size: clamp(0.8rem, 2vw, 0.9rem);
+                margin: 3px; 
+                padding: 8px 10px; 
+                flex: 1 1 calc(50% - 6px); 
+                text-align: center; 
+                justify-content: center; 
             }
-            .sidebar {
-                width: 100%; /* Full width sidebar on mobile */
-                height: auto; /* Height auto for sidebar */
-                padding: 15px 0;
+            .bottom-sidebar-buttons { 
+                flex-direction: row; 
+                justify-content: space-around; 
+                gap: 6px; 
+                margin-top: 6px; 
+                padding-top: 0; 
+                width: 100%; 
             }
-            .sidebar ul {
-                display: flex; /* Make sidebar items horizontal on mobile */
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 5px;
+            .sidebar-home, .sidebar-logout { 
+                font-size: clamp(0.8rem, 2vw, 0.9rem);
+                padding: 7px 10px; 
+                flex: 1 1 45%; 
             }
-            .sidebar ul li {
-                margin-bottom: 5px; /* Smaller margin for horizontal layout */
-                padding: 0 5px; /* Adjust padding for smaller screens */
+            .sidebar .icon { font-size: 20px; }
+            .sidebar-logout .fas { font-size: 20px; }
+
+            .main-content { padding: 8px; order: 1; }
+            .container { padding: 12px 18px; min-height: auto; max-width: 100%; }
+            .page-header { flex-direction: column; text-align: center; gap: 0; }
+            h1 { margin-top: 8px; }
+            .main-grid { flex-direction: column; gap: 25px; }
+            .left-section { min-width: unset; width: 100%; }
+            .policy-row { 
+                flex-direction: row; 
+                justify-content: flex-start; 
+                align-items: center; 
+                gap: 8px; 
             }
-            .sidebar ul li a {
-                padding: 10px 15px;
-                border-left: none; /* Remove left border highlight for horizontal layout */
-                border-bottom: 3px solid transparent; /* Use bottom border for active */
-                border-radius: 5px; /* Slightly smaller border-radius for mobile boxes */
+            .policy-row span { 
+                white-space: normal; 
+                width: auto; 
+                min-width: unset; 
+                margin-right: 0; 
             }
-            .sidebar ul li a:hover {
-                padding-left: 15px; /* Reset padding-left on hover */
-                border-bottom-color: var(--sidebar-item-hover);
+            .policy-row input, .policy-row select { 
+                width: auto; 
+                max-width: 100px; 
             }
-            .sidebar ul li a.active {
-                border-left-color: transparent; /* Reset left border */
-                border-bottom-color: var(--secondary-color); /* Apply bottom border */
-            }
-            .main-content {
-                padding: 10px; /* Further reduced padding for smaller screens */
-            }
-            .container {
-                padding: 15px 20px; /* Reduced padding on all sides for smaller screens */
-                min-height: auto; /* Reset min-height for mobile */
+            .policy-row input[type="number"] { margin-right: 8px; }
+            .policy-row .marketing-pn-text {
+                margin-right: 0px; /* Further adjustment for even smaller screens */
             }
 
-            header {
-                flex-direction: column;
-                text-align: center;
-                gap: 0px;
-            }
+            .right-section { min-width: unset; width: 100%; }
+            .right-section input[type="time"] { width: 80%; }
 
-            .logo {
-                height: 50px;
-            }
-
-            h1 {
-                margin-top: 10px;
-            }
-
-            .main-grid {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .left-section {
-                min-width: unset;
-                width: 100%;
-            }
-
-            .message-block {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .offset {
-                margin-left: 0; /* Remove offset on small screens */
-                padding-left: 10px; /* Indent slightly for clarity */
-            }
-
-            .message-block span {
-                width: 100%; /* Full width for text before inputs */
-            }
-
-            .message-block input,
-            .message-block select {
-                width: 100%; /* Full width for inputs */
-                max-width: 150px; /* But keep a reasonable max-width */
-            }
-
-            .right-section {
-                min-width: unset;
-                width: 100%;
-            }
-
-            .right-section input[type="time"] {
-                width: 80%;
-            }
-
-            .buttons {
-                flex-direction: column;
-                gap: 15px;
-                margin-top: 30px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            /* For mobile, make sidebar buttons stack */
-            .sidebar-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .sidebar .home-btn,
-            .sidebar .logout-btn {
-                width: calc(100% - 50px); /* Account for left/right padding */
-                margin: 0; /* Reset margins added for desktop */
-                max-width: unset; /* Remove max-width on mobile */
-            }
+            .buttons { flex-direction: column; gap: 12px; margin-top: 25px; }
+            .btn { width: 100%; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 10px; /* Even smaller padding for very small screens */
+            .container { padding: 8px; }
+            .subtext { font-size: clamp(11px, 2.3vw, 13px); }
+            .policy-row { 
+                font-size: clamp(13px, 2.3vw, 15px); 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 4px; 
             }
-            .subtext {
-                font-size: clamp(14px, 3vw, 16px);
+            .policy-row img { margin-bottom: 4px; }
+            .policy-row span:first-of-type, 
+            .policy-row span:last-of-type { 
+                min-width: unset; 
+                width: 100%; 
+                text-align: left; 
+                margin-right: 0; 
             }
-            .message-block {
-                font-size: clamp(14px, 2.5vw, 16px);
+            .policy-row input[type="number"], 
+            .policy-row select { 
+                width: 100%; 
+                max-width: 100%; 
+                margin-right: 0; 
             }
-            .message-block input,
-            .message-block select {
-                font-size: clamp(14px, 2vw, 15px);
+            .policy-row select { margin-top: 4px; }
+            .policy-row .marketing-pn-text {
+                margin-right: 0; /* Ensures no extra margin on smallest screens */
             }
-            .sidebar ul li a {
-                padding: 8px 10px; /* Further reduce padding for very small screens */
-                font-size: 0.9em; /* Smaller font size for very small screens */
+        }
+
+        /* Larger screens */
+        @media screen and (min-width: 1441px) {
+            header { padding: 25px 50px; height: 190px; }
+            .welcome h1 { font-size: 50px; }
+            .welcome p { font-size: 26px; }
+            .user-profile img { width: 80px; height: 80px; }
+            .sidebar { padding: 20px; }
+            .sidebar button, .sidebar-link { padding: 16px 30px; margin-bottom: 10px; font-size: clamp(18px, 1.5vw, 1.2rem); }
+            .bottom-sidebar-buttons { padding-top: 20px; }
+            .sidebar-home, .sidebar-logout { padding: 14px 25px; font-size: clamp(1rem, 1.2vw, 1.1rem); }
+            .sidebar .icon { font-size: clamp(22px, 1.8vw, 26px); }
+            .sidebar-logout .fas { font-size: clamp(22px, 1.8vw, 26px); }
+            .main-content { padding: 25px 30px; }
+            .container { max-width: calc(100% - 50px); padding: 30px 50px; }
+            .page-header { margin-bottom: 30px; padding-bottom: 20px; }
+            h1 { font-size: clamp(30px, 5vw, 40px); }
+            .subtext { margin: 10px 0 40px; font-size: clamp(16px, 2.5vw, 20px); }
+            .container .subtext { font-size: clamp(14px, 2vw, 18px); }
+            .main-grid { gap: 25px; }
+            .left-section { gap: 25px; }
+            .policy-row { font-size: clamp(15px, 2vw, 19px); padding: 8px 0; gap: 10px; }
+            .policy-row img { width: 40px; height: 40px; }
+            .policy-row > span:first-of-type { min-width: 100px; margin-right: 10px; }
+            .policy-row > span:last-of-type { min-width: 150px; margin-right: 20px; }
+            .policy-row .marketing-pn-text {
+                margin-right: 8px; /* Adjusted for larger screens */
             }
+            .policy-row input[type="number"] { padding: 10px 12px; width: 80px; font-size: clamp(15px, 1.6vw, 17px); margin-right: 20px; }
+            .policy-row select { padding: 10px 12px; width: 120px; font-size: clamp(15px, 1.6vw, 17px); }
+            .right-section { padding: 30px; font-size: clamp(15px, 1.8vw, 18px); }
+            .outgoing-message-box { padding: 12px 15px; margin-bottom: 20px; }
+            .outgoing-message-box h3 { font-size: clamp(20px, 2.5vw, 26px); }
+            .right-section p { margin-bottom: 20px; }
+            .right-section label { margin-right: 10px; }
+            .right-section input[type="time"] { padding: 10px 15px; margin-top: 10px; font-size: clamp(16px, 1.8vw, 19px); max-width: 200px; }
+            .buttons { gap: 25px; margin-top: 50px; }
+            .btn { padding: 14px 35px; font-size: clamp(16px, 2vw, 20px); }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-left">
-            <h2>Welcome Back! Priyanka!</h2>
+    <header>
+        <div class="welcome">
+            <h1>Welcome Back! Priyanka</h1>
             <p>Smart Connections: Respecting Preferences, Building Trust</p>
         </div>
-        <div class="navbar-right">
-            <img src="{% static 'avtar1.jpg' %}" alt="User Profile" />
+        <div class="user-profile">
+            <img src="{% static 'avtar1.jpg' %}" alt="User Profile Image" aria-label="Priyanka's Profile Image">
         </div>
-    </div>
+    </header>
 
     <div class="dashboard-layout">
-        <div class="sidebar">
-            <ul>
-                <li><a href="#">Generate Leads</a></li>
-                <li><a href="#">Approve Campaigns</a></li>
-                <li><a href="#" class="active">Contact Policy (Admin)</a></li>
-                <li><a href="#">Access Matrix (Admin)</a></li>
-                <li><a href="#">Reports Hub</a></li>
-                <li><a href="#">Campaign Calendar</a></li>
-                <li><a href="#">Help Book</a></li>
-            </ul>
-            <div class="sidebar-buttons">
-                <a href="#" class="home-btn">Home</a>
-                <a href="#" class="logout-btn">Logout</a>
+        <aside class="sidebar">
+            <button onclick="showModal()">Generate Leads</button>
+            <button onclick="showModal()">Approve Campaigns</button>
+            <a href="{% url 'control_page' %}" class="sidebar-link">Contact Policy (Admin)</a>
+            <a href="{% url 'access_page' %}" class="sidebar-link">Access Matrix (Admin)</a>
+            <a href="#" class="sidebar-link" onclick="showModal()">Reports Hub</a>
+            <a href="{% url 'calender_page' %}" class="sidebar-link">Campaign Calendar</a>
+            <button onclick="showModal()">Help Book</button>
+            <div class="bottom-sidebar-buttons">
+                <a href="#" class="sidebar-home"><span class="icon">🏠</span> Home</a>
+                <a href="{% url 'login_page' %}" class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
-        </div>
+        </aside>
 
-        <div class="main-content">
+        <main class="main-content">
             <div class="container">
-                <header>
+                <div class="page-header">
                     <h1>Contact Policy</h1>
-                </header>
+                </div>
 
                 <p class="subtext">Smart Connections: Respecting Preferences, Building Trust</p>
 
                 <div class="main-grid">
-                    <div class="left-section">
-                        <div class="message-block ">
-                            <img src="{% static 'email-icon.png' %}" alt="Email Icon" />
+                    <section class="left-section">
+                        <div class="policy-row">
+                            <img src="{% static 'email-icon.png' %}" alt="Email Icon"/>
                             <span>Maximum</span>
-                            <input type="number" value="1" />
+                            <input type="number" value="1"/>
                             <span>Marketing eMails</span>
                             <select>
                                 <option>per day</option>
                                 <option>per week</option>
                             </select>
                         </div>
-                        <div class="message-block offset">
+                        <div class="policy-row">
+                            <img src="{% static 'email-icon.png' %}" alt="Email Icon" style="opacity: 0;"/>
                             <span>Maximum</span>
-                            <input type="number" value="4" />
+                            <input type="number" value="4"/>
                             <span>Marketing eMails</span>
                             <select>
                                 <option>per week</option>
@@ -630,59 +713,63 @@
                             </select>
                         </div>
 
-                        <div class="message-block ">
-                            <img src="{% static 'notification.jpeg' %}" alt="PN Icon" />
+                        <div class="policy-row">
+                            <img src="{% static 'notification.jpeg' %}" alt="Push Notification Icon"/>
                             <span>Maximum</span>
-                            <input type="number" value="2" />
-                            <span>Marketing PN</span>
+                            <input type="number" value="2"/>
+                            <span class="marketing-pn-text">Marketing PN</span>
                             <select>
                                 <option>per day</option>
                                 <option>per week</option>
                             </select>
                         </div>
-                        <div class="message-block offset">
+                        <div class="policy-row">
+                            <img src="{% static 'notification.jpeg'}" alt="Push Notification Icon" style="opacity: 0;"/>
                             <span>Maximum</span>
-                            <input type="number" value="6" />
-                            <span>Marketing PN</span>
+                            <input type="number" value="6"/>
+                            <span class="marketing-pn-text">Marketing PN</span>
                             <select>
                                 <option>per week</option>
                                 <option>per day</option>
                             </select>
                         </div>
 
-                        <div class="message-block">
-                            <img src="{% static 'whatsapp-icon.png' %}" alt="WA Icon" />
+                        <div class="policy-row">
+                            <img src="{% static 'whatsapp-icon.png' %}" alt="WhatsApp Icon"/>
                             <span>Maximum</span>
-                            <input type="number" value="2" />
+                            <input type="number" value="2"/>
                             <span>Marketing WA</span>
                             <select>
                                 <option>per day</option>
                                 <option>per week</option>
                             </select>
                         </div>
-                        <div class="message-block offset">
+                        <div class="policy-row">
+                            <img src="{% static 'whatsapp-icon.png' %}" alt="WhatsApp Icon" style="opacity: 0;"/>
                             <span>Maximum</span>
-                            <input type="number" value="6" />
+                            <input type="number" value="6"/>
                             <span>Marketing WA</span>
                             <select>
                                 <option>per week</option>
                                 <option>per day</option>
                             </select>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="right-section">
-                        <h3>Outgoing Message<br>Time control</h3>
+                    <section class="right-section">
+                        <div class="outgoing-message-box">
+                            <h3>Outgoing Message<br>Time Control</h3>
+                        </div>
                         <p>Marketing messages are allowed to be sent to customers between:</p>
                         <div>
-                            <label>Start:</label>
-                            <input type="time" value="09:00" />
+                            <label for="start-time">Start:</label>
+                            <input type="time" id="start-time" value="09:00"/>
                         </div>
                         <div>
-                            <label>End:</label>
-                            <input type="time" value="20:00" />
+                            <label for="end-time">End:</label>
+                            <input type="time" id="end-time" value="20:00"/>
                         </div>
-                    </div>
+                    </section>
                 </div>
 
                 <div class="buttons">
@@ -691,7 +778,31 @@
                     <button class="btn back">Back</button>
                 </div>
             </div>
+        </main>
+    </div>
+
+    <div id="popup-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()" aria-label="Close modal">×</span>
+            <h2>Feature Coming Soon</h2>
+            <p>This feature is under development. Please check back later.</p>
         </div>
     </div>
+    <script>
+        function showModal() {
+            document.getElementById("popup-modal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("popup-modal").style.display = "none";
+        }
+
+        window.addEventListener("click", function(e) {
+            const modal = document.getElementById("popup-modal");
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
