@@ -1,284 +1,283 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Sign Up | Engage.AI</title>
-{% load static %}
-<style>
+  <meta charset="UTF-8" />
+  <title>Sign Up | Engage.AI</title>
+  {% load static %}
+  <style>
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     body {
-        background: url('https://www.transparenttextures.com/patterns/grey-wash-wall.png') repeat;
-        background-size: cover;
-        height: 100vh;
+      background: url('https://www.transparenttextures.com/patterns/grey-wash-wall.png') repeat;
+      background-size: cover;
+      height: 110vh;
+      color: #2c3e50;
     }
 
     .container {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        backdrop-filter: blur(6px);
+      display: flex;
+      width: 100vw;
+      height: 110vh;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     .form-section {
-        flex: 1.5;
-        padding: 60px;
-        background-color: rgba(247, 247, 247, 0.9);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+      flex: 1.5;
+      padding: 60px;
+      background-color: rgba(255, 255, 255, 0.96);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .image-section {
-        flex: 1.3;
-        padding: 40px;
-        background-color: rgba(255, 255, 255, 0.9);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-left: 1px solid #e0e0e0;
+      flex: 1.6;
+      padding: 40px;
+      background-color: rgba(250, 250, 250, 0.96);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #e6e6e6;
     }
 
     .form-section h2 {
-        font-size: 32px;
-        color: #2c3e50;
-        margin-bottom: 10px;
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
     .form-section p {
-        margin-bottom: 20px;
-        color: #7f8c8d;
-        font-style: italic;
+      margin-bottom: 20px;
+      color: #7f8c8d;
+      font-style: italic;
     }
 
     .welcome-box {
-        text-align: center;
-        margin-bottom: 30px;
-        animation: fadeInDown 0.8s ease;
+      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeInDown 0.8s ease;
     }
 
     .welcome-box h2 {
-        font-size: 36px;
-        color: #2c3e50;
-        margin-bottom: 8px;
+      font-size: 36px;
+      margin-bottom: 8px;
     }
 
     .welcome-box p {
-        font-size: 16px;
-        color: #7f8c8d;
-        font-style: italic;
+      font-size: 16px;
+      color: #7f8c8d;
     }
 
     label {
-        display: block;
-        margin: 10px 0 5px;
-        font-weight: 600;
-        color: #34495e;
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
     }
 
     input[type="text"],
     input[type="email"],
     input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        margin-bottom: 15px;
-        font-size: 14px;
-        transition: box-shadow 0.3s;
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      font-size: 14px;
+      transition: box-shadow 0.3s;
     }
 
     input:focus {
-        outline: none;
-        box-shadow: 0 0 8px rgba(85, 150, 255, 0.5);
+      outline: none;
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
     }
 
     button {
-        width: 100%;
-        padding: 12px;
-        background-color: #054789;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        margin-top: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+      width: 100%;
+      padding: 12px;
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 3px 6px rgba(74, 144, 226, 0.3);
     }
 
     button:hover {
-        background-color: #0073e6;
+      background-color: #357ABD;
+      box-shadow: 0 5px 12px rgba(74, 144, 226, 0.4);
     }
 
     .signin-text {
-        margin-top: 20px;
-        font-size: 14px;
-        text-align: center;
-        animation: fadeInUp 1s ease;
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      animation: fadeInUp 1s ease;
+      color: #34495e;
     }
 
     .signin-link {
-        color: #e74c3c;
-        font-weight: bold;
-        text-decoration: none;
-        transition: color 0.3s;
+      color: #D64545;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
     }
 
     .signin-link:hover {
-        color: #c0392b;
-        text-decoration: underline;
+      color: #c0392b;
+      text-decoration: underline;
     }
 
     .image-section img {
-        width: 180px;
-        height: 180px; /* Adjusted to make it a square */
-        border-radius: 0; /* Adjusted to make it a square */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        background-color: white;
-        padding: 12px;
-        animation: fadeIn 1.2s ease;
-        object-fit: contain; /* Ensures the image fits within the square */
+      width: 250px;
+      margin-bottom: 20px;
+      border: 5px solid #4A90E2;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      transition: transform 0.3s ease;
     }
 
     .image-section img:hover {
-        transform: scale(1.08);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+      transform: scale(1.08);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
     }
 
     .image-section h3 {
-        font-size: 30px;
-        color: #2c3e50;
-        margin-top: 20px;
+      font-size: 30px;
+      margin-top: 20px;
     }
 
     .image-section p {
-        font-size: 18px;
-        color: #666;
+      font-size: 18px;
+      color: #666;
     }
 
     .highlight {
-        color: red;
-        font-weight: 600;
+      color: #D64545;
+      font-weight: 600;
     }
 
     .website {
-        font-size: 14px;
-        margin-top: 15px;
-        color: #888;
-    }
-    @keyframes fadeIn {
-        0% { opacity: 0; transform: scale(0.9); }
-        100% { opacity: 1; transform: scale(1); }
+      font-size: 14px;
+      margin-top: 15px;
+      color: #888;
     }
 
     @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     ul {
-        list-style-type: none;
-        padding: 10px 0;
+      list-style-type: none;
+      padding: 10px 0;
+      margin-bottom: 20px;
     }
 
     ul li {
-        color: red;
-        font-weight: 500;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-bottom: 8px;
     }
-</style>
+
+    ul li.error {
+      color: #D64545;
+      background-color: #fceaea;
+      border: 1px solid #D64545;
+    }
+
+    ul li.success {
+      color: #2ECC71;
+      background-color: #e6f9f0;
+      border: 1px solid #2ECC71;
+    }
+
+    .bottom-text {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #999;
+      padding-bottom: 15px;
+    }
+  </style>
 </head>
 <body>
-{% if messages %}
-<ul>
+  {% if messages %}
+  <ul>
     {% for message in messages %}
-        <li>{{ message }}</li>
+      <li class="{{ message.tags }}">{{ message }}</li>
     {% endfor %}
-</ul>
-{% endif %}
+  </ul>
+  {% endif %}
 
-<div class="container">
+  <div class="container">
     <div class="form-section">
-        <div class="welcome-box">
-            <h2>WELCOME</h2>
-            <p>Your journey to smarter engagement starts</p>
-        </div>
+      <div class="welcome-box">
+        <h2>WELCOME</h2>
+        <p>Your journey to smarter engagement starts</p>
+      </div>
 
-        <form action="" method="post" id="signupForm">
-            {% csrf_token %}
+      <form action="" method="post">
+        {% csrf_token %}
+        <label for="name">Full Name</label>
+        <input name="name" type="text" id="name" placeholder="Enter your name" required />
 
-            <label for="name">Full Name</label>
-            <input name="name" type="text" id="name" placeholder="Enter your name" required>
+        <label for="email">E-Mail</label>
+        <input name="email" type="email" id="email" placeholder="your@gmail.com" required />
 
-            <label for="email">E-Mail</label>
-            <input name="email" type="email" id="email" placeholder="Enter your email" required>
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password" placeholder="Enter password" required />
 
-            <label for="password">Password</label>
-            <input name="password" type="password" id="password" placeholder="Enter password" required>
+        <label for="confirm-password">Confirm Password</label>
+        <input name="confirm_password" type="password" id="confirm-password" placeholder="Confirm password" required />
+        
+        <label for="photo">Upload Photo</label>
+        <input name="photo" type="file" id="photo" accept="image/*" />
+        <button type="submit">Sign up</button>
+      </form>
 
-            <label for="confirm-password">Confirm Password</label>
-            <input name="confirm_password" type="password" id="confirm-password" placeholder="Confirm password" required>
-
-            <div id="password-match-error" style="color: red; font-size: 0.9em; margin-bottom: 10px;"></div>
-
-            <button type="submit">Sign up</button>
-        </form>
-
-        <div class="signin-text">
-            Already have an account? <a class="signin-link" href="{% url 'login_page' %}">Sign in here</a>
-        </div>
+      <div class="signin-text">
+        Already have an account? <a class="signin-link" href="{% url 'login_page' %}">Sign in here</a>
+      </div>
     </div>
+
     <div class="image-section">
-        <img src="{% url 'ai.png'}" alt="AI Bot">
-        <h3>ENGAGE.AI</h3>
-        <p>Smarter <span class="highlight">Conversations</span> for Better <span class="highlight">Leads</span></p>
-        <p class="website">www.aSquare.com</p>
+      <img src="{% static 'ai.png' %}" alt="AI Bot" />
+      <h3>ENGAGE.AI</h3>
+      <p>Smarter <span class="highlight">Conversations</span> for Better <span class="highlight">Leads</span></p>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('signupForm');
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
-        const passwordMatchError = document.getElementById('password-match-error');
-
-        form.addEventListener('submit', function(event) {
-            // Check if passwords match
-            if (passwordInput.value !== confirmPasswordInput.value) {
-                passwordMatchError.textContent = 'Passwords do not match.';
-                event.preventDefault(); // Stop the form from submitting
-            } else {
-                passwordMatchError.textContent = ''; // Clear any previous error
-            }
-        });
-    });
-</script>
+    <div class="bottom-text">
+      <p><em>www.aSquare.com</em></p>
+    </div>
+  </div>
 </body>
 </html>
-   
