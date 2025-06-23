@@ -1,12 +1,18 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Access Control</title>
-    {% load static %}
-    <style>
-        body {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Access Control</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <style>
+    body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-size: cover;
@@ -481,160 +487,160 @@
         .close-btn:hover {
             color: #000;
         }
-    </style>
+    
+  </style>
 </head>
 <body>
-    <div class="header-image-banner">
-        <div class="header-text-content">
-            <h1>Welcome Back! Priyanka</h1>
-            <p>Smart Connections: Respecting Preferences, Building Trust</p>
+  <!-- Header -->
+  <div class="header-image-banner">
+    <div class="header-text-content">
+      <h1>Welcome Back! {{ user_name }}</h1>
+      <p>Smart Connections: Respecting Preferences, Building Trust</p>
+    </div>
+    <img src="{{ user_avatar_url }}" alt="User Avatar" class="header-avatar" />
+  </div>
+
+  <div class="content-area-wrapper">
+    <div class="left-panel">
+      <aside class="menu-bar">
+        <button onclick="showModal()">Generate Leads</button>
+        <button onclick="showModal()">Approve Campaigns</button>
+        <a href="{% url 'control_page' %}">Contact Policy (Admin)</a>
+        <a href="{% url 'access_page' %}">Access Matrix (Admin)</a>
+        <button onclick="showModal()">Reports Hub</button>
+        <a href="{% url 'calender_page' %}">Campaign Calendar</a>
+        <button onclick="showModal()">Help Book</button>
+
+        <div class="bottom-buttons">
+          <a href="{% url 'dashboard_page' %}" class="home-link"><span class="icon">🏠</span> Home</a>
+          <a href="{% url 'login_page' %}" class="logout-link"><span class="icon">&#x2B05;</span> Logout</a>
         </div>
-        <img src="{% static 'avtar1.jpg' %}" alt="Priyanka Avatar" class="header-avatar" />
+      </aside>
+
+      <div class="sidebar">
+        <label for="user-name" class="label">Select User(s)</label>
+        <div class="select-container">
+          <div class="input-with-icon-wrapper">
+            <input type="text" id="user-name" value="{{ user_name }}" readonly />
+            <span class="dropdown-icon" onclick="toggleDropdown()">▼</span>
+          </div>
+          <div id="dropdown" class="dropdown-list"></div>
+        </div>
+
+        <img src="{{ user_avatar_url }}" alt="User Avatar" class="avatar" id="avatar" />
+        <div class="user-info">
+          <p class="user-name" id="display-name">{{ user_name }}</p>
+          <p class="user-email" id="display-email">{{ user_email }}</p>
+        </div>
+
+        <button class="delete-btn">Delete User</button>
+      </div>
     </div>
 
-    <div class="content-area-wrapper">
-        <div class="left-panel">
-            <aside class="menu-bar">
-                <button onclick="showModal()">Generate Leads</button>
-                <button onclick="showModal()">Approve Campaigns</button>
-                <a href="{% url 'control_page' %}">Contact Policy (Admin)</a>
-                <a href="{% url 'access_page' %}">Access Matrix (Admin)</a>
-                <button onclick="showModal()">Reports Hub</button>
-                <a href="{% url 'calender_page' %}">Campaign Calendar</a>
-                <button onclick="showModal()">Help Book</button>
+    <div class="main">
+      <div class="access-control-secondary-header">
+        <h1>Access Control</h1>
+        <p>Secure Your Space: Effortless Access Control at Your Fingertips</p>
+      </div>
 
-                <div class="bottom-buttons">
-                    <a href="{% url 'dashboard_page' %}" class="home-link"><span class="icon">🏠</span> Home</a>
-                    <a href="{% url 'login_page' %}" class="logout-link"><span class="icon">&#x2B05;</span> Logout</a>
-                </div>
-            </aside>
-
-            <div class="sidebar">
-                <label for="user-name" class="label">Select User(s)</label>
-                <div class="select-container">
-                    <div class="input-with-icon-wrapper">
-                        <input type="text" id="user-name" value="Shruti singh" readonly />
-                        <span class="dropdown-icon" onclick="toggleDropdown()">▼</span>
-                    </div>
-                    <div id="dropdown" class="dropdown-list"></div>
-                </div>
-
-                <img src="{% static 'avtar1.jpg' %}" alt="User Avatar" class="avatar" id="avatar" />
-                <div class="user-info">
-                    <p class="user-name" id="display-name">Abhilasha Mishra</p>
-                    <p class="user-email" id="display-email">KM@client.com</p>
-                </div>
-
-                <button class="delete-btn">Delete User</button>
-            </div>
+      <div class="access-section">
+        <div class="column">
+          <h3>PRODUCT</h3>
+          <div class="label-checkbox">Credit Cards <input type="checkbox" checked></div>
+          <div class="label-checkbox">Insurance <input type="checkbox"></div>
+          <div class="label-checkbox">Deposits <input type="checkbox"></div>
+          <div class="label-checkbox">Loan <input type="checkbox"></div>
+          <div class="label-checkbox">Equity <input type="checkbox"></div>
+          <div class="label-checkbox">Remittance <input type="checkbox"></div>
         </div>
 
-        <div class="main">
-            <div class="access-control-secondary-header">
-                <h1>Access Control</h1>
-                <p>Secure Your Space: Effortless Access Control at Your Fingertips</p>
-            </div>
-
-            <div class="access-section">
-                <div class="column">
-                    <h3>PRODUCT</h3>
-                    <div class="label-checkbox">Credit Cards <input type="checkbox" checked></div>
-                    <div class="label-checkbox">Insurance <input type="checkbox"></div>
-                    <div class="label-checkbox">Deposits <input type="checkbox"></div>
-                    <div class="label-checkbox">Loan <input type="checkbox"></div>
-                    <div class="label-checkbox">Equity <input type="checkbox"></div>
-                    <div class="label-checkbox">Remittance <input type="checkbox"></div>
-                </div>
-
-                <div class="column">
-                    <h3>ROLE & RESPONSIBILITY</h3>
-                    <div class="label-checkbox">Campaign Maker <input type="checkbox" checked></div>
-                    <div class="label-checkbox">Campaign Checker <input type="checkbox"></div>
-                    <div class="label-checkbox">Data Analytics <input type="checkbox"></div>
-                    <div class="label-checkbox">Content Creator <input type="checkbox" checked></div>
-                    <div class="label-checkbox">Tech Admin <input type="checkbox"></div>
-                    <div class="label-checkbox">Reports <input type="checkbox"></div>
-                </div>
-            </div>
-
-            <div class="action-buttons">
-                <button class="update-btn" onclick="alert('Access updated successfully!')">Update</button>
-                <button class="reset-btn" onclick="resetCheckboxes()">Reset</button>
-                <button class="bck-btn" onclick="goBack()">Back</button>
-            </div>
+        <div class="column">
+          <h3>ROLE & RESPONSIBILITY</h3>
+          <div class="label-checkbox">Campaign Maker <input type="checkbox" checked></div>
+          <div class="label-checkbox">Campaign Checker <input type="checkbox"></div>
+          <div class="label-checkbox">Data Analytics <input type="checkbox"></div>
+          <div class="label-checkbox">Content Creator <input type="checkbox" checked></div>
+          <div class="label-checkbox">Tech Admin <input type="checkbox"></div>
+          <div class="label-checkbox">Reports <input type="checkbox"></div>
         </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="update-btn" onclick="alert('Access updated successfully!')">Update</button>
+        <button class="reset-btn" onclick="resetCheckboxes()">Reset</button>
+        <button class="bck-btn" onclick="goBack()">Back</button>
+      </div>
     </div>
+  </div>
 
-    <div id="popup-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-box">
-            <span class="close-btn" onclick="closeModal()">×</span>
-            <h2>Feature Coming Soon</h2>
-            <p>This feature is under development. Please check back later.</p>
-        </div>
+  <!-- Modal -->
+  <div id="popup-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <h2>Feature Coming Soon</h2>
+      <p>This feature is under development. Please check back later.</p>
     </div>
+  </div>
 
-    <script>
-        function resetCheckboxes() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => checkbox.checked = false);
-        }
+  <!-- Inject Users JSON for JS -->
+  <script type="application/json" id="user-data">{{ users_json|safe }}</script>
 
-        function goBack() {
-            window.history.back();
-        }
+  <script>
+    function resetCheckboxes() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
 
-        function showModal() {
-            document.getElementById("popup-modal").style.display = "flex";
-        }
+    function goBack() {
+      window.history.back();
+    }
 
-        function closeModal() {
-            document.getElementById("popup-modal").style.display = "none";
-        }
+    function showModal() {
+      document.getElementById("popup-modal").style.display = "flex";
+    }
 
-        window.addEventListener("click", function(e) {
-            const modal = document.getElementById("popup-modal");
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
+    function closeModal() {
+      document.getElementById("popup-modal").style.display = "none";
+    }
 
-        const users = [         {           name: "Pooja ",           email: "PoojaM@client.com",           avatar: "{% static 'avtar1.jpg' %}"         },          {           name: "Rahul Verma",           email: "rahul.v@client.com",           avatar: "{% static 'avtar2.jpg' %}"         },          {           name: "Anjali Gupta",           email: "anjali.g@client.com",           avatar: "{% static 'avtar2.jpg'}"         }         ];
+    window.addEventListener("click", function(e) {
+      const modal = document.getElementById("popup-modal");
+      if (e.target === modal) closeModal();
+    });
 
-        const dropdown = document.getElementById("dropdown");
+    const users = JSON.parse(document.getElementById("user-data").textContent);
+    const dropdown = document.getElementById("dropdown");
 
-        users.forEach(user => {
-            const item = document.createElement("div");
-            item.className = "dropdown-item";
-            item.innerHTML = `
-                <img src="${user.avatar}" alt="${user.name}" />
-                <div>
-                    <div>${user.name}</div>
-                    <div style="font-size: 12px; color: gray;">${user.email}</div>
-                </div>
-            `;
-            item.onclick = () => selectUser(user);
-            dropdown.appendChild(item);
-        });
+    users.forEach(user => {
+      const item = document.createElement("div");
+      item.className = "dropdown-item";
+      item.innerHTML = `
+        <img src="${user.avatar}" alt="${user.name}" />
+        <div>
+          <div>${user.name}</div>
+          <div style="font-size: 12px; color: gray;">${user.email}</div>
+        </div>
+      `;
+      item.onclick = () => selectUser(user);
+      dropdown.appendChild(item);
+    });
 
-        function toggleDropdown() {
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
+    function toggleDropdown() {
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
 
-        function selectUser(user) {
-            document.getElementById("user-name").value = user.name;
-            document.getElementById("display-name").textContent = user.name;
-            document.getElementById("display-email").textContent = user.email;
-            document.getElementById("avatar").src = user.avatar;
-            toggleDropdown(); // Close dropdown after selection
-        }
+    function selectUser(user) {
+      document.getElementById("user-name").value = user.name;
+      document.getElementById("display-name").textContent = user.name;
+      document.getElementById("display-email").textContent = user.email;
+      document.getElementById("avatar").src = user.avatar;
+      toggleDropdown();
+    }
 
-        // Close dropdown when clicking outside of the select-container
-        window.addEventListener("click", (e) => {
-            const selectContainer = document.querySelector(".select-container");
-            if (selectContainer && !selectContainer.contains(e.target)) {
-                dropdown.style.display = "none";
-            }
-        });
-    </script>
+    window.addEventListener("click", e => {
+      const container = document.querySelector(".select-container");
+      if (container && !container.contains(e.target)) dropdown.style.display = "none";
+    });
+  </script>
 </body>
 </html>
+
