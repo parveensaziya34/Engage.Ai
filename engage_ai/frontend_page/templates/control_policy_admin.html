@@ -471,19 +471,28 @@
     </div>
   </header>
     <div class="dashboard-layout">
-        <aside class="sidebar">
-            <button onclick="showModal()">Generate Leads</button>
-            <button onclick="showModal()">Approve Campaigns</button>
-            <a href="{% url 'control_page' %}" class="sidebar-link">Contact Policy (Admin)</a>
-            <a href="{% url 'access_page' %}" class="sidebar-link">Access Matrix (Admin)</a>
-            <a href="#" class="sidebar-link" onclick="showModal()">Reports Hub</a>
-            <a href="{% url 'calender_page' %}" class="sidebar-link">Campaign Calendar</a>
-            <button onclick="showModal()">Help Book</button>
-            <div class="bottom-sidebar-buttons">
-                <a href="{% url 'dashboard_page' %}" class="sidebar-home"><span class="icon">🏠</span> Home</a>
-                <a href="{% url 'login_page' %}" class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
-        </aside>
+       <aside class="sidebar">
+  <button onclick="showModal()">Generate Leads</button>
+  <button onclick="showModal()">Approve Campaigns</button>
+
+  <a href="{% url 'control_page' %}" class="sidebar-link">Contact Policy (Admin)</a>
+
+  {% if request.user.is_staff or request.user.is_superuser %}
+    <a href="{% url 'access_page' %}" class="sidebar-link">Access Matrix (Admin)</a>
+  {% else %}
+    <a href="#" class="sidebar-link" onclick="showContactAdminModal()">Access Matrix (Admin)</a>
+  {% endif %}
+
+  <a href="#" class="sidebar-link" onclick="showModal()">Reports Hub</a>
+  <a href="{% url 'calender_page' %}" class="sidebar-link">Campaign Calendar</a>
+  <button onclick="showModal()">Help Book</button>
+
+  <div class="bottom-sidebar-buttons">
+    <a href="#" class="sidebar-home"><span class="icon">🏠</span> Home</a>
+    <a href="{% url 'login_page' %}" class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</aside>
+
         <main class="main-content">
             <div class="container">
                 <div class="page-header">
@@ -583,7 +592,30 @@
             <p>This feature is under development. Please check back later.</p>
         </div>
     </div>
+    <div id="admin-contact-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-box">
+    <span class="close-btn" onclick="closeContactAdminModal()">×</span>
+    <h2>Access Restricted</h2>
+    <p>This section is restricted to admin users. Please contact your system administrator for access.</p>
+  </div>
+</div>
+
     <script>
+        function showContactAdminModal() {
+  document.getElementById("admin-contact-modal").style.display = "flex";
+}
+
+function closeContactAdminModal() {
+  document.getElementById("admin-contact-modal").style.display = "none";
+}
+
+window.addEventListener("click", function(e) {
+  const contactModal = document.getElementById("admin-contact-modal");
+  if (e.target === contactModal) {
+    closeContactAdminModal();
+  }
+});
+
         function showModal() {
             document.getElementById("popup-modal").style.display = "flex";
         }
