@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
+        /* Your existing CSS styles */
         :root {
             --primary-color: #046bb0;
             --secondary-color: #2ecc71;
@@ -34,29 +35,25 @@
             width: 100%;
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             background-color: #f4f6f8;
         }
 
         header {
-            background-size: cover;
-            width: 100%;
-            height: 180px;
-            display: flex;            /* background: url("{% static 'image header.png' %}") no-repeat center center; */
-            background-color: #2c3e50;
-            
-            align-items: center;
-            padding: 0 30px;
-            box-sizing: border-box;
-            flex-shrink: 0;
-            justify-content: space-between;
-            /* background-color: rgba(255, 255, 255, 0.5); White overlay with 50% transparency */
-            /* background-blend-mode: lighten; Blend mode to lighten the background image */
-        }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 30px 40px;
+      background-color: #2c3e50;
+      color: white;
+      border-bottom: 1px solid #e0e0e0;
+      flex-shrink: 0;
+    }
 
-        .welcome {
+    .welcome {
             text-align: left;
             margin-right: auto;
         }
@@ -88,26 +85,20 @@
             display: flex;
             flex-grow: 1;
             width: 100%;
-            padding-top: 0;
-            box-sizing: border-box;
             overflow: hidden;
         }
 
         .sidebar {
-            width: 390px;
+            width: 380px;
             background-color: #2c3e50;
             color: white;
-            padding: 15px 10px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            align-items: stretch;
-            gap: 10px;
-            font-size: 17px;
-            height: auto;
-            box-sizing: border-box;
-            margin-top: 0;
-            padding-bottom: 15px;
             flex-shrink: 0;
+            justify-content: space-between;
+            height: 100%;
+            overflow-y: auto;
         }
 
         .sidebar button,
@@ -115,68 +106,61 @@
             background-color: #34495e;
             color: white;
             border: none;
-            padding: 12px 15px;
-            font-size: clamp(17px, 1.2vw, 20px);
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
             border-radius: 6px;
             text-align: left;
-            transition: background-color 0.2s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.9rem;
+            display: block;
             text-decoration: none;
+            width: 100%;
         }
 
-        .sidebar button:hover,
-        .sidebar-link:hover {
-            background-color: #036d8d;
+        .sidebar-link:hover,
+        .sidebar button:hover {
+            background-color: #1c5a94;
         }
 
         .bottom-sidebar-buttons {
-            margin-top: auto;
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
-            gap: 5px;
-            padding-top: 15px;
+            margin-top: auto;
+            padding-top: 10px;
         }
 
         .sidebar-home,
         .sidebar-logout {
-            background-color: #dc3545;
-            flex-grow: 2;
-            justify-content: center;
+            background-color: #cc2317;
             color: white;
-            border-radius: 7px;
-            text-decoration: none;
-            font-size: clamp(1rem, 1vw, 1.1rem);
-            padding: 5px 8px;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.3s ease;
         }
-            
+
         .sidebar-home:hover,
         .sidebar-logout:hover {
-            background-color: #c82333;
+            background-color: #a81a10;
         }
 
-        .sidebar .icon {
-            font-size: clamp(17px, 1.2vw, 22px);
-        }
-        .sidebar-logout .fas {
-            font-size: clamp(17px, 1.2vw, 22px);
-        }
-
-        /* --- Main Content Area Styles --- */
         .main-content {
             flex: 1;
-            padding: 10px;
+            padding: 20px;
             overflow-y: auto;
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
 
-        /* Adjusted container to fit within main-content */
         .container {
             background: var(--card-bg);
             width: 100%;
@@ -184,26 +168,10 @@
             border-radius: 12px;
             padding: 25px 40px;
             box-shadow: 0 8px 25px var(--shadow);
-            animation: fadeIn 0.8s ease-out;
             margin: 0 auto;
             min-height: calc(100vh - 180px - 20px);
             display: flex;
             flex-direction: column;
-        }
-
-        .container > .page-header,
-        .container > .subtext,
-        .container > .buttons {
-            align-self: center;
-        }
-
-        .container > .main-grid {
-            flex-grow: 1;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .page-header {
@@ -228,10 +196,6 @@
             font-size: clamp(15px, 2.3vw, 18px);
             color: var(--medium-text);
             font-weight: 400;
-        }
-
-        .container .subtext {
-            font-size: clamp(13px, 1.8vw, 16px);
         }
 
         .main-grid {
@@ -287,12 +251,7 @@
             flex-shrink: 0;
             min-width: 140px;
             text-align: left;
-            margin-right: 15px; /* Default margin for all last spans */
-        }
-        
-        /* New rule for 'Marketing PN' spans to adjust their margin */
-        .policy-row .marketing-pn-text,marketing-wn-text {
-            margin-right: 10px; /* Adjust this value as needed */
+            margin-right: 15px; 
         }
 
         .policy-row input[type="number"],
@@ -304,19 +263,17 @@
             background-color: var(--card-bg);
             color: var(--dark-text);
             appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
             cursor: pointer;
             margin-right: 20px;
             flex-shrink: 0;
         }
-            
+
         .policy-row input[type="number"] {
             width: 70px;
             text-align: center;
             margin-right: 15px;
         }
-            
+
         .policy-row select {
             width: 110px;
             margin-right: 50px;
@@ -400,13 +357,13 @@
             letter-spacing: 0.5px;
         }
 
-        .btn.update ,
+        .btn.update,
         .btn.reset,
         .btn.back {
             background-color: #5f6767;
             color: white;
         }
-            
+
         .btn.update:hover,
         .btn.reset:hover,
         .btn.back:hover {
@@ -415,7 +372,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
-        /* --- Modal Styles --- */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -463,210 +420,56 @@
             color: #333;
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 1024px) {
-            header { padding: 15px 25px; height: 160px; }
-            .welcome h1 { font-size: 34px; }
-            .welcome p { font-size: 18px; }
-            .user-profile img { width: 55px; height: 55px; }
-
-            .sidebar { width: 320px; padding: 12px 8px; gap: 8px; }
-            .sidebar button, .sidebar-link { padding: 10px 12px; font-size: clamp(16px, 1.8vw, 18px); }
-            .sidebar .icon { font-size: clamp(20px, 2.2vw, 22px); }
-            .sidebar-logout .fas { font-size: clamp(20px, 2.2vw, 22px); }
-            .bottom-sidebar-buttons { padding-top: 12px; }
-            .sidebar-home, .sidebar-logout { font-size: clamp(0.9rem, 1.2vw, 1rem); padding: 8px 12px; }
-
-            .main-content { padding: 8px; }
-            .container { padding: 20px 30px; max-width: calc(100% - 16px); }
-            .page-header { margin-bottom: 20px; padding-bottom: 12px; }
-            h1 { font-size: clamp(24px, 4vw, 34px); }
-            .subtext { margin: 6px 0 25px; font-size: clamp(14px, 2.2vw, 17px); }
-            .container .subtext { font-size: clamp(12px, 1.7vw, 15px); }
-
-            .main-grid { gap: 15px; }
-            .left-section { min-width: 260px; gap: 15px; }
-            .policy-row { font-size: clamp(13px, 1.7vw, 16px); padding: 5px 0; gap: 6px; }
-            .policy-row img { width: 30px; height: 30px; }
-            .policy-row > span:first-of-type { min-width: 80px; margin-right: 8px; }
-            .policy-row > span:last-of-type { min-width: 120px; margin-right: 10px; } /* Adjusted for smaller screens */
-            .policy-row .marketing-pn-text {
-                margin-right: 7px; /* Adjusted for smaller screens */
-            }
-            .policy-row input[type="number"] { padding: 7px 9px; width: 65px; margin-right: 90px; }
-            .policy-row select { padding: 7px 9px; width: 100px;  margin-right: 10px;}
-
-            .right-section { min-width: 230px; padding: 20px; font-size: clamp(13px, 1.5vw, 16px); }
-            .outgoing-message-box { padding: 8px 10px; margin-bottom: 12px; }
-            .outgoing-message-box h3 { font-size: clamp(17px, 2vw, 22px); }
-            .right-section p { margin-bottom: 12px; }
-            .right-section label { margin-right: 6px; }
-            .right-section input[type="time"] { padding: 7px 10px; margin-top: 6px; font-size: clamp(14px, 1.7vw, 17px); max-width: 160px; }
-            
-            .buttons { gap: 15px; margin-top: 30px; }
-            .btn { padding: 10px 25px; font-size: clamp(14px, 1.8vw, 17px); }
-        }
-
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            body { flex-direction: column; overflow-y: auto; }
-            header { padding: 10px; flex-direction: column; text-align: center; height: auto; }
-            .welcome { margin-bottom: 8px; }
-            .welcome h1 { font-size: 26px; }
-            .welcome p { font-size: 15px; }
-            .user-profile img { width: 45px; height: 45px; margin-left: 0; }
-
-            .dashboard-layout { flex-direction: column; overflow: visible; }
-            .sidebar { 
-                width: 100%; 
-                flex-direction: row; 
-                flex-wrap: wrap; 
-                justify-content: space-around; 
-                padding: 8px; 
-                position: static; 
-                height: auto; 
-                min-height: auto; 
-                border-radius: 0; 
-                box-shadow: none; 
-                order: 2; 
-            }
-            .sidebar button, .sidebar-link { 
-                font-size: clamp(0.8rem, 2vw, 0.9rem);
-                margin: 3px; 
-                padding: 8px 10px; 
-                flex: 1 1 calc(50% - 6px); 
-                text-align: center; 
-                justify-content: center; 
-            }
-            .bottom-sidebar-buttons { 
-                flex-direction: row; 
-                justify-content: space-around; 
-                gap: 6px; 
-                margin-top: 6px; 
-                padding-top: 0; 
-                width: 100%; 
-            }
-            .sidebar-home, .sidebar-logout { 
-                font-size: clamp(0.8rem, 2vw, 0.9rem);
-                padding: 7px 10px; 
-                flex: 1 1 45%; 
-            }
-            .sidebar .icon { font-size: 20px; }
-            .sidebar-logout .fas { font-size: 20px; }
-
-            .main-content { padding: 8px; order: 1; }
-            .container { padding: 12px 18px; min-height: auto; max-width: 100%; }
-            .page-header { flex-direction: column; text-align: center; gap: 0; }
-            h1 { margin-top: 8px; }
-            .main-grid { flex-direction: column; gap: 25px; }
-            .left-section { min-width: unset; width: 100%; }
-            .policy-row { 
-                flex-direction: row; 
-                justify-content: flex-start; 
-                align-items: center; 
-                gap: 8px; 
-            }
-            .policy-row span { 
-                white-space: normal; 
-                width: auto; 
-                min-width: unset; 
-                margin-right: 0; 
-            }
-            .policy-row input, .policy-row select { 
-                width: auto; 
-                max-width: 100px; 
-            }
-            .policy-row input[type="number"] { margin-right: 8px; }
-            .policy-row .marketing-pn-text {
-                margin-right: 0px; /* Further adjustment for even smaller screens */
+            header {
+                padding: 15px;
             }
 
-            .right-section { min-width: unset; width: 100%; }
-            .right-section input[type="time"] { width: 80%; }
+            .welcome h1 {
+                font-size: 24px;
+            }
 
-            .buttons { flex-direction: column; gap: 12px; margin-top: 25px; }
-            .btn { width: 100%; }
-        }
+            .welcome p {
+                font-size: 14px;
+            }
 
-        @media (max-width: 480px) {
-            .container { padding: 8px; }
-            .subtext { font-size: clamp(11px, 2.3vw, 13px); }
-            .policy-row { 
-                font-size: clamp(13px, 2.3vw, 15px); 
-                flex-direction: column; 
-                align-items: flex-start; 
-                gap: 4px; 
+            .user-profile img {
+                width: 45px;
+                height: 45px;
             }
-            .policy-row img { margin-bottom: 4px; }
-            .policy-row span:first-of-type, 
-            .policy-row span:last-of-type { 
-                min-width: unset; 
-                width: 100%; 
-                text-align: left; 
-                margin-right: 0; 
-            }
-            .policy-row input[type="number"], 
-            .policy-row select { 
-                width: 100%; 
-                max-width: 100%; 
-                margin-right: 0; 
-            }
-            .policy-row select { margin-top: 4px; }
-            .policy-row .marketing-pn-text {
-                margin-right: 0; /* Ensures no extra margin on smallest screens */
-            }
-        }
 
-        /* Larger screens */
-        @media screen and (min-width: 1441px) {
-            header { padding: 25px 50px; height: 190px; }
-            .welcome h1 { font-size: 50px; }
-            .welcome p { font-size: 26px; }
-            .user-profile img { width: 80px; height: 80px; }
-            .sidebar { padding: 20px; }
-            .sidebar button, .sidebar-link { padding: 16px 30px; margin-bottom: 10px; font-size: clamp(18px, 1.5vw, 1.2rem); }
-            .bottom-sidebar-buttons { padding-top: 20px; }
-            .sidebar-home, .sidebar-logout { padding: 14px 25px; font-size: clamp(1rem, 1.2vw, 1.1rem); }
-            .sidebar .icon { font-size: clamp(22px, 1.8vw, 26px); }
-            .sidebar-logout .fas { font-size: clamp(22px, 1.8vw, 26px); }
-            .main-content { padding: 25px 30px; }
-            .container { max-width: calc(100% - 50px); padding: 30px 50px; }
-            .page-header { margin-bottom: 30px; padding-bottom: 20px; }
-            h1 { font-size: clamp(30px, 5vw, 40px); }
-            .subtext { margin: 10px 0 40px; font-size: clamp(16px, 2.5vw, 20px); }
-            .container .subtext { font-size: clamp(14px, 2vw, 18px); }
-            .main-grid { gap: 25px; }
-            .left-section { gap: 25px; }
-            .policy-row { font-size: clamp(15px, 2vw, 19px); padding: 8px 0; gap: 10px; }
-            .policy-row img { width: 40px; height: 40px; }
-            .policy-row > span:first-of-type { min-width: 100px; margin-right: 10px; }
-            .policy-row > span:last-of-type { min-width: 150px; margin-right: 20px; }
-            .policy-row .marketing-pn-text {
-                margin-right: 8px; /* Adjusted for larger screens */
+            .sidebar {
+                width: 100%;
+                padding: 10px;
             }
-            .policy-row input[type="number"] { padding: 10px 12px; width: 80px; font-size: clamp(15px, 1.6vw, 17px); margin-right: 20px; }
-            .policy-row select { padding: 10px 12px; width: 120px; font-size: clamp(15px, 1.6vw, 17px); }
-            .right-section { padding: 30px; font-size: clamp(15px, 1.8vw, 18px); }
-            .outgoing-message-box { padding: 12px 15px; margin-bottom: 20px; }
-            .outgoing-message-box h3 { font-size: clamp(20px, 2.5vw, 26px); }
-            .right-section p { margin-bottom: 20px; }
-            .right-section label { margin-right: 10px; }
-            .right-section input[type="time"] { padding: 10px 15px; margin-top: 10px; font-size: clamp(16px, 1.8vw, 19px); max-width: 200px; }
-            .buttons { gap: 25px; margin-top: 50px; }
-            .btn { padding: 14px 35px; font-size: clamp(16px, 2vw, 20px); }
+
+            .sidebar button,
+            .sidebar-link {
+                font-size: 0.8rem;
+                padding: 10px;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="welcome">
-            <h1>Welcome Back! Priyanka</h1>
+    <div class="welcome">
+            <h1>Welcome Back! {{ user.first_name|default:user.username }}</h1>
             <p>Smart Connections: Respecting Preferences, Building Trust</p>
-        </div>
-        <div class="user-profile">
-            <img src="{% static 'avtar1.jpg' %}" alt="User Profile Image" aria-label="Priyanka's Profile Image">
-        </div>
-    </header>
-
+    </div>
+    <div class="user-profile">
+      <img src="{% if profile_photo %}{{ profile_photo }}{% else %}{% static 'avatar1.jpg' %}{% endif %}" alt="{{ username }}">
+    </div>
+  </header>
     <div class="dashboard-layout">
         <aside class="sidebar">
             <button onclick="showModal()">Generate Leads</button>
@@ -677,19 +480,16 @@
             <a href="{% url 'calender_page' %}" class="sidebar-link">Campaign Calendar</a>
             <button onclick="showModal()">Help Book</button>
             <div class="bottom-sidebar-buttons">
-                <a href="#" class="sidebar-home"><span class="icon">🏠</span> Home</a>
+                <a href="{% url 'dashboard_page' %}" class="sidebar-home"><span class="icon">🏠</span> Home</a>
                 <a href="{% url 'login_page' %}" class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </aside>
-
         <main class="main-content">
             <div class="container">
                 <div class="page-header">
                     <h1>Contact Policy</h1>
                 </div>
-
                 <p class="subtext">Smart Connections: Respecting Preferences, Building Trust</p>
-
                 <div class="main-grid">
                     <section class="left-section">
                         <div class="policy-row">
@@ -712,7 +512,6 @@
                                 <option>per day</option>
                             </select>
                         </div>
-
                         <div class="policy-row">
                             <img src="{% static 'notification.jpeg' %}" alt="Push Notification Icon"/>
                             <span>Maximum</span>
@@ -724,7 +523,7 @@
                             </select>
                         </div>
                         <div class="policy-row">
-                            <img src="{% static 'notification.jpeg'}" alt="Push Notification Icon" style="opacity: 0;"/>
+                            <img src="{% static 'notification.jpeg' %}" alt="Push Notification Icon" style="opacity: 0;"/>
                             <span>Maximum</span>
                             <input type="number" value="6"/>
                             <span class="marketing-pn-text">Marketing PN</span>
@@ -733,7 +532,6 @@
                                 <option>per day</option>
                             </select>
                         </div>
-
                         <div class="policy-row">
                             <img src="{% static 'whatsapp-icon.png' %}" alt="WhatsApp Icon"/>
                             <span>Maximum</span>
@@ -755,7 +553,6 @@
                             </select>
                         </div>
                     </section>
-
                     <section class="right-section">
                         <div class="outgoing-message-box">
                             <h3>Outgoing Message<br>Time Control</h3>
@@ -771,7 +568,6 @@
                         </div>
                     </section>
                 </div>
-
                 <div class="buttons">
                     <button class="btn update">Update</button>
                     <button class="btn reset">Reset</button>
@@ -779,8 +575,7 @@
                 </div>
             </div>
         </main>
-    </div>
-
+ </div>
     <div id="popup-modal" class="modal-overlay" style="display: none;">
         <div class="modal-box">
             <span class="close-btn" onclick="closeModal()" aria-label="Close modal">×</span>
@@ -792,11 +587,9 @@
         function showModal() {
             document.getElementById("popup-modal").style.display = "flex";
         }
-
         function closeModal() {
             document.getElementById("popup-modal").style.display = "none";
         }
-
         window.addEventListener("click", function(e) {
             const modal = document.getElementById("popup-modal");
             if (e.target === modal) {
