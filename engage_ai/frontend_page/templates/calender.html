@@ -459,13 +459,11 @@ body.dark-mode .delete-btn:focus {
   background-color: var(--light-purple);
   color: var(--dark-purple);
 }
-
 .add-event-container {
   margin-top: 15px;
   display: flex;
   gap: 8px;
 }
-
 .add-event-input {
   flex-grow: 1;
   padding: 8px 12px;
@@ -477,17 +475,14 @@ body.dark-mode .delete-btn:focus {
   background-color: #f0f0f0;
   color: var(--text-dark);
 }
-
 body.dark-mode .add-event-input {
   background-color: #4a5568;
   color: var(--text-light);
   border-color: var(--light-purple);
 }
-
 .add-event-input:focus {
   border-color: var(--dark-purple);
 }
-
 .add-event-button {
   padding: 8px 18px;
   background-color: var(--purple);
@@ -498,41 +493,37 @@ body.dark-mode .add-event-input {
   font-weight: 700;
   transition: background-color 0.3s ease;
 }
-
 .add-event-button:hover,
 .add-event-button:focus {
   background-color: var(--dark-purple);
   outline: none;
 }
-
 </style>
 </head>
 <body>
   <header class="header-main">
         <div class="welcome">
-            <h1>Good Morning, Priyanka! Welcome Back!</h1>
+            <h1>Welcome Back! {{ user.first_name|default:user.username }}</h1>
             <p>Smart Connections: Respecting Preferences, Building Trust</p>
         </div>
         <div class="user-profile">
             <img src="https://via.placeholder.com/80/f39c12/ffffff?text=P" alt="Priyanka's Profile Picture" />
         </div>
   </header>
-
   <div class="content-wrapper">
     <aside class="sidebar">
           <button><i class="fas fa-chart-line"></i> Generate Leads</button>
           <button><i class="fas fa-check-circle"></i> Approve Campaigns</button>
-          <a href="#" class="sidebar-link"><i class="fas fa-shield-alt"></i> Contact Policy (Admin)</a>
-          <a href="#" class="sidebar-link"><i class="fas fa-network-wired"></i> Access Matrix (Admin)</a>
+          <a href="{% url 'control_page' %}" class="sidebar-link"><i class="fas fa-shield-alt"></i> Contact Policy (Admin)</a>
+          <a href="{% url 'access_page' %}" class="sidebar-link"><i class="fas fa-network-wired"></i> Access Matrix (Admin)</a>
           <a href="#" class="sidebar-link"><i class="fas fa-file-alt"></i> Reports Hub</a>
-          <a href="#" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Campaign Calendar</a>
+          <a href="{% url 'calender_page' %}" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Campaign Calendar</a>
           <button><i class="fas fa-book"></i> Help Book</button>
           <div class="bottom-sidebar-buttons">
-            <button class="sidebar-home"><i class="fas fa-home"></i> Home</button>
-            <button class="sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <a href ="{% url 'dashboard_page' %}" class="sidebar-link"><i class="fas fa-home"></i> Home</a>
+            <a href ="{% url 'login_page' %}" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
     </aside>
-
     <div class="main-content-area">
       <main class="calendar" role="application" aria-label="Calendar">
           <header class="calendar-header">
@@ -546,7 +537,6 @@ body.dark-mode .add-event-input {
               title="Toggle dark mode"
             >🌙</button>
           </header>
-
           <div class="weekdays" aria-hidden="true">
             <div>Sun</div>
             <div>Mon</div>
@@ -556,9 +546,7 @@ body.dark-mode .add-event-input {
             <div>Fri</div>
             <div>Sat</div>
           </div>
-
           <div class="days" id="days" tabindex="0" aria-label="Calendar days grid"></div>
-
           <div class="event-list-in-calendar">
               <h2>Events for Selected Date</h2>
               <div id="event-list" aria-live="polite" aria-relevant="additions removals"></div>
@@ -576,7 +564,6 @@ body.dark-mode .add-event-input {
       </main>
     </div>
   </div>
-
   <script>
     (() => {
       const daysContainer = document.getElementById('days');
@@ -587,67 +574,46 @@ body.dark-mode .add-event-input {
       const addEventInput = document.getElementById('add-event-input');
       const addEventBtn = document.getElementById('add-event-btn');
       const darkModeToggle = document.getElementById('dark-mode-toggle');
-
       let today = new Date();
       let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       let currentYear = selectedDate.getFullYear();
       let currentMonth = selectedDate.getMonth();
-
-      // Store events as a map: 'YYYY-MM-DD' => [event1, event2,...]
       let events = {};
-
-      // Format date as YYYY-MM-DD string
       function formatDate(year, month, day) {
         const m = month + 1;
         const mm = m < 10 ? '0' + m : m;
         const dd = day < 10 ? '0' + day : day;
         return `${year}-${mm}-${dd}`;
       }
-
-      // Load events from localStorage
       function loadEvents() {
         const stored = localStorage.getItem('calendarEvents');
         if (stored) {
           events = JSON.parse(stored);
         }
       }
-
-      // Save events to localStorage
       function saveEvents() {
         localStorage.setItem('calendarEvents', JSON.stringify(events));
       }
-
-      // Render month-year heading
       function renderMonthYear() {
         const monthName = selectedDate.toLocaleString('default', { month: 'long' });
         monthYearDisplay.textContent = `${monthName} ${currentYear}`;
       }
-
-      // Render days grid
       function renderDays() {
         daysContainer.innerHTML = '';
         const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
         const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
         const firstWeekDay = firstDayOfMonth.getDay();
         const daysInMonth = lastDayOfMonth.getDate();
-
-        // Calculate days from previous month to show
         const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
-
-        // Total grid cells = 42 (6 weeks * 7 days)
         const totalCells = 42;
-
         for (let i = 0; i < totalCells; i++) {
           const dayDiv = document.createElement('div');
           dayDiv.setAttribute('tabindex', '-1');
-
           let dayNumber;
           let dateYear = currentYear;
           let dateMonth = currentMonth;
           let isDisabled = false;
-
           if (i < firstWeekDay) {
-            // Days from previous month
             dayNumber = prevMonthLastDay - firstWeekDay + i + 1;
             dateMonth = currentMonth - 1;
             isDisabled = true;
@@ -656,7 +622,6 @@ body.dark-mode .add-event-input {
               dateYear--;
             }
           } else if (i >= firstWeekDay + daysInMonth) {
-            // Days from next month
             dayNumber = i - (firstWeekDay + daysInMonth) + 1;
             dateMonth = currentMonth + 1;
             isDisabled = true;
@@ -665,18 +630,14 @@ body.dark-mode .add-event-input {
               dateYear++;
             }
           } else {
-            // Current month days
             dayNumber = i - firstWeekDay + 1;
           }
-
           dayDiv.textContent = dayNumber;
           if (isDisabled) {
             dayDiv.classList.add('disabled');
           } else {
             const thisDate = new Date(dateYear, dateMonth, dayNumber);
             const thisDateStr = formatDate(dateYear, dateMonth, dayNumber);
-
-            // Highlight today
             if (
               thisDate.getFullYear() === today.getFullYear() &&
               thisDate.getMonth() === today.getMonth() &&
@@ -684,8 +645,6 @@ body.dark-mode .add-event-input {
             ) {
               dayDiv.classList.add('today');
             }
-
-            // Highlight selected day
             if (
               thisDate.getFullYear() === selectedDate.getFullYear() &&
               thisDate.getMonth() === selectedDate.getMonth() &&
@@ -694,14 +653,11 @@ body.dark-mode .add-event-input {
               dayDiv.classList.add('selected');
               dayDiv.setAttribute('tabindex', '0');
             }
-
-            // Add event dot if events exist for this day
             if (events[thisDateStr] && events[thisDateStr].length > 0) {
               const dot = document.createElement('span');
               dot.classList.add('event-dot');
               dayDiv.appendChild(dot);
             }
-
             dayDiv.addEventListener('click', () => {
               selectedDate = thisDate;
               currentYear = selectedDate.getFullYear();
@@ -710,7 +666,6 @@ body.dark-mode .add-event-input {
               renderDays();
               renderEventList();
             });
-
             dayDiv.addEventListener('keydown', (e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -718,30 +673,24 @@ body.dark-mode .add-event-input {
               }
             });
           }
-
           daysContainer.appendChild(dayDiv);
         }
       }
-
-      // Render event list for selected date
       function renderEventList() {
         eventList.innerHTML = '';
         const selectedDateStr = formatDate(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
         const dayEvents = events[selectedDateStr] || [];
-
         if (dayEvents.length === 0) {
           const noEventsMsg = document.createElement('p');
           noEventsMsg.textContent = 'No events for this day.';
           eventList.appendChild(noEventsMsg);
           return;
         }
-
         dayEvents.forEach((evt, index) => {
           const eventDiv = document.createElement('div');
           eventDiv.classList.add('event-item');
           eventDiv.setAttribute('tabindex', '0');
           eventDiv.textContent = evt;
-
           const deleteBtn = document.createElement('button');
           deleteBtn.classList.add('delete-btn');
           deleteBtn.setAttribute('aria-label', `Delete event: ${evt}`);
@@ -758,13 +707,10 @@ body.dark-mode .add-event-input {
             renderEventList();
             renderDays();
           });
-
           eventDiv.appendChild(deleteBtn);
           eventList.appendChild(eventDiv);
         });
       }
-
-      // Add event for selected date
       function addEvent() {
         const text = addEventInput.value.trim();
         if (!text) return;
@@ -779,8 +725,6 @@ body.dark-mode .add-event-input {
         renderDays();
         addEventInput.focus();
       }
-
-      // Navigate months
       prevMonthBtn.addEventListener('click', () => {
         currentMonth--;
         if (currentMonth < 0) {
@@ -792,7 +736,6 @@ body.dark-mode .add-event-input {
         renderDays();
         renderEventList();
       });
-
       nextMonthBtn.addEventListener('click', () => {
         currentMonth++;
         if (currentMonth > 11) {
@@ -804,34 +747,24 @@ body.dark-mode .add-event-input {
         renderDays();
         renderEventList();
       });
-
-      // Add event button click
       addEventBtn.addEventListener('click', addEvent);
-
-      // Add event on Enter key in input
       addEventInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
           addEvent();
         }
       });
-
-      // Dark mode toggle
       darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         darkModeToggle.textContent = isDark ? '☀️' : '🌙';
         darkModeToggle.setAttribute('aria-pressed', isDark);
       });
-
-      // Load events on start
       loadEvents();
-
-      // Initial render
       renderMonthYear();
       renderDays();
       renderEventList();
     })();
   </script>
 </body>
-</html>
+</html> 
