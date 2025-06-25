@@ -1,8 +1,21 @@
+import os
 import sqlite3
 from groq import Groq
 import pandas as pd
+from dotenv import load_dotenv
 
-client = Groq(api_key="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")
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the actual key from environment
+api_key = os.getenv("GROQ_API_KEY")
+
+# Optional: strip to remove whitespace/newlines
+api_key = api_key.strip()
+
+# Initialize the client with the actual API key
+client = Groq(api_key=api_key)
+
 database = sqlite3.connect("May25.db")
 cursor = database.cursor()
 
