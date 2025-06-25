@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
+from .groq_handler import generate_sql_from_nl, execute_sql, generate_nl_response
 
 # Login view
 def login_page(request):
