@@ -25,6 +25,17 @@ def login_page(request):
 
     return render(request, 'login_screen.html')
 
+def chatbot_page(request):
+    if request.method == "POST":
+        question = request.POST.get("question", "")
+        try:
+            sql_query = generate_sql_from_nl(question)
+            sql_result = execute_sql(sql_query)
+            nl_response = generate_nl_response(question, sql_result)
+            return JsonResponse({"response": nl_response})
+        except Exception as e:
+            return JsonResponse({"response": f"Error: {str(e)}"}, status=500)
+    return render(request, 'chatbot.html', {})
 
 # Signup view
 def signup_page(request):
